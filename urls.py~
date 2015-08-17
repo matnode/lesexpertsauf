@@ -5,5 +5,5 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
-    (r'^inscription/$', 'inscription'),
+    (r'^inscription/$', 'index'),
 )
