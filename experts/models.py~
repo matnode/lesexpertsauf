@@ -76,6 +76,29 @@ class Mission(models.Model):
     def __unicode__(self):
           return self.entreprise 
 
+class Mission(models.Model):
+    human = models.ForeignKey(Human)
+    titre = models.TextField()
+    description = models.TextField()
+    fonction = models.TextField()
+    entreprise = models.TextField()
+    competenceutilisee = models.TextField()
+    lieu = models.CharField(max_length=255)
+    datedebut = models.DateTimeField()
+    datefin = models.DateTimeField()
+    
+     def __unicode__(self):
+           return self.titre
+     def __unicode__(self):
+           return self.description
+     def __unicode__(self):
+           return self.fonction
+     def __unicode__(self):
+           return self.entreprise
+     def __unicode__(self):
+           return self.competenceutilisee     
+     def __unicode__(self):
+           return self.lieu
 
 class Formation(models.Model):
     human = models.ForeignKey(Human)
