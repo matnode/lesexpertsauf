@@ -1,0 +1,395 @@
+{% extends "layout.html" %}
+
+ {% block css %}
+ {{ block.super }}
+ {% load staticfiles %} 
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+ {% endblock %}
+          
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+                     <div class="col-sm-12"><h3>Renseigner les informations concernant votre profil {{currentuser.user.username}}</h3>  </div>
+                    <div class="col-sm-2">                        
+                       
+                        <ul class="list-group clear-list m-t">
+                            <li class="list-group-item fist-item">
+                                
+                                 <img src="http://placehold.it/150x150">
+                              
+                            </li>
+                            <li class="list-group-item">
+                               <button class="btn btn-primary full-width"> changer de photo </button>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                    <div class="col-sm-5">
+                       <div class="statistic-box">
+                        <h4>
+                            {% if currentuser.user.human.nom == '' %}
+                                    Qui suis-je?
+                            {% else %}
+                           Je suis 
+                             <span class="update_animwhoiam">
+                                   {{currentuser.user.human.civilite}} 
+                                   {{currentuser.user.human.nom}}
+                                   {{currentuser.user.human.prenom}}
+                                    <a href="#" style="font-size:10px;" class="update_whoiam"> 
+                                    <i class="fa fa-pencil"> </i>mettre à jour </a> 
+                            </span>
+                            {% endif %}
+                        </h4>
+                        
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    {% if currentuser.user.human.nom == '' %}
+                                    <form method="post" action="/profil/{{currentuser.user.id}}/">
+                                        {% csrf_token %}
+                                          <select id="civilite" name="civilite" class="form-control" required>
+                                               <option value=""> votre civilite</option>
+                                               <option> M.</option>
+                                               <option> Mlle.</option>
+                                               <option> Mme.</option>
+                                          </select>
+                                          <br>
+                                          <input type="text" placeholder="nom" class="form-control" name="nom" required>
+                                          <br>
+                                          <input type="text" placeholder="prenom" class="form-control" name="prenom">
+                                          <br>
+                                          <input type="text" placeholder="date d'anniversaire" required class="form-control dateanniv" name="dateanniv">
+                                          <br>
+                                          
+                                          <label for="signature">Votre signature</label>
+                                          <input id="signature" type="text" placeholder="ex: à vaincre sans périple on triomphe sans gloire!"  
+                                          class="form-control" name="signature">
+                                          <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                    
+                                    {% else %}
+                                       <div style="text-align:left;" class="update_animwhoiam"> 
+                                        Mon anniversaire sera le:  {{currentuser.user.human.datenaissance}} <br>  <br>
+                                        Mon mémo: <span class="label label-primary">{{currentuser.user.human.signature}}</span>
+                                       </div> 
+                                        <form method="post" class="modwhoiam animated fadeInRight" style="display:none;" action="/profil/{{currentuser.user.id}}/">
+                                        {% csrf_token %}
+                                          <select id="civilite" name="civilite" class="form-control" required>
+                                               <option value=""> votre civilite</option>
+                                               <option> M.</option>
+                                               <option> Mlle.</option>
+                                               <option> Mme.</option>
+                                          </select>
+                                          <br>
+                                          <input type="text" placeholder="nom" class="form-control" name="nom" value="{{currentuser.user.human.nom}}" required>
+                                          <br>
+                                          <input type="text" placeholder="prenom" class="form-control" name="prenom" value="{{currentuser.user.human.prenom}}">
+                                          <br>
+                                          <input type="text" placeholder="date d'anniversaire" required class="form-control dateanniv" name="dateanniv" value="{{currentuser.user.human.datenaissance}}">
+                                          <br>
+                                          
+                                          <label for="signature">Votre signature</label>
+                                          <input id="signature" type="text" placeholder="ex: à vaincre sans périple on triomphe sans gloire!" class="form-control" value="{{currentuser.user.human.signature}}" name="signature">
+                                          <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>   
+                                    {%endif%}
+                                   
+                                </div>
+                            </div>
+                            <div class="m-t">
+                                <small>  
+                                {% if currentuser.user.human.nom == '' %}
+                                     nous aimerons en savoir plus sur vous.                                    
+                                {% endif %}
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="statistic-box">
+                        <h4>
+                          
+                                Mes coordonnees 
+                              {% if currentuser.user.human.telephone != '' %}   
+                                <a href="#" style="font-size:10px;" class="update_mycords"> 
+                                    <i class="fa fa-pencil"> </i>mettre à jour
+                                </a>
+                              {%endif%}
+                        </h4>
+                       
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                 {% if currentuser.user.human.telephone == '' %}
+                                    <form method="post" action="/profilcords/{{currentuser.user.id}}/"> 
+                                           {% csrf_token %}
+                                          <input type="text" placeholder="site web (ex: ifgu.auf.org)" class="form-control" name="siteweb">
+                                          <br>
+                                          <input type="text" placeholder="numero de telephone" class="form-control" name="telephone" required>
+                                          <br>
+                                          <input type="text" placeholder="votre adresse" class="form-control" name="adresse">
+                                          <br>
+                                          <input type="text" placeholder="boite postale" class="form-control" name="bp">
+                                          <br>
+                                           <input type="text" placeholder="ville" class="form-control" name="ville" required>
+                                          <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                 {% else %}
+                                   <div style="text-align:left;" class="update_mycords">
+                                        
+                                         <span>                                           
+                                            <i class="fa fa-globe" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%; font-weight: 600;">Site web:</span> 
+                                            <a href="{{currentuser.user.human.siteweb}}" target="_blank">
+                                                {{currentuser.user.human.siteweb}}
+                                            </a>
+                                          </span> <br>
+                                          
+                                          <span> 
+                                            <i class="fa fa-phone" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%;font-weight: 600;">Telephone:</span>
+                                              {{currentuser.user.human.telephone}} 
+                                          </span> <br>
+                                          
+                                          <span>
+                                             <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
+                                             <span style="padding:1%; font-weight: 600;"> Mon adresse:</span> 
+                                              {{currentuser.user.human.adresse}}/ {{currentuser.user.human.ville}}
+                                          </span> <br>
+                                          
+                                          <span> 
+                                              <i class="fa fa-map-signs" style="color:#1AB394;"> </i> 
+                                              <span style="padding:1%; font-weight: 600;" >Ma boite postale:</span> 
+                                               {{currentuser.user.human.codepostale}} 
+                                          </span>
+                                          
+                                    </div>
+                                   
+                                         <form method="post" class="modmycord animated fadeInRight" style="display:none;" action="/profilcords/{{currentuser.user.id}}/"> 
+                                           {% csrf_token %}
+                                          <input type="text" placeholder="site web (ex: ifgu.auf.org)" class="form-control" name="siteweb" value="{{currentuser.user.human.siteweb}}">
+                                          <br>
+                                          <input type="text" placeholder="numero de telephone" class="form-control" name="telephone" value="{{currentuser.user.human.telephone}}" required>
+                                          <br>
+                                          <input type="text" placeholder="votre adresse" class="form-control" name="adresse" value="{{currentuser.user.human.adresse}}">
+                                          <br>
+                                          <input type="text" placeholder="boite postale" class="form-control" name="bp" value="{{currentuser.user.human.codepostale}}">
+                                          <br>
+                                           <input type="text" placeholder="ville" class="form-control" name="ville" required value="{{currentuser.user.human.ville}}">
+                                          <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                                                       
+                                 {% endif %}
+                                </div>
+                            </div>
+                            <div class="m-t">
+                              {% if currentuser.user.human.telephone == '' %}
+                                <small>  veuillez renseignez vos coordonnees actuelles.</small>
+                              {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+
+            </div>
+            
+          <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content">
+                        <div class="row">
+			
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Vos competences </h5> 
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                  <div>
+                                     <form>
+                                          <input type="text" placeholder="titre" class="form-control" name="titre">
+                                          <br>
+                                          <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                           <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>                                    
+                                  </div>
+                               </div>
+                             </div>
+                           </div>
+                           
+			   
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Missions effectues</h5> 
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                     <div>
+                                        <form>
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datefin">
+                                              <br>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut">
+                                              <br>
+                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise">
+                                              <br>
+                                              <input type="text" placeholder="poste occupé" class="form-control" name="fonction">
+                                              <br>
+                                              <input type="text" placeholder="titre de la mission" class="form-control" name="titre">
+                                              <br>
+                                              <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                              <br>
+                                               <textarea placeholder="compétence utilisé" class="form-control" name="competences"></textarea>
+                                              <br>
+                                              <button class="btn btn-primary"> enregistrer </button>
+                                        </form>   
+                                      </div>
+                               </div>
+                            </div>
+                        </div>
+                          
+			  
+			
+			</div>
+			
+			     <div class="row">
+			
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Formation</h5> 
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                      
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div>
+                                       <form>
+                                          <input type="text" placeholder="date de début" class="form-control dp1" name="datefin">
+                                          <br>
+                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut">
+                                          <br>
+                                          <input type="text" placeholder="libellé de la formation" class="form-control" name="intitule">
+                                           <br>
+                                             <input type="text" placeholder="le diplome obtenu" class="form-control" name="diplome">
+                                            <br>
+                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="diplome">
+                                            <br>
+                                            <input type="text" placeholder="le lieu de la formation" class="form-control" name="lieu">
+                                            <br>
+                                         <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                           <br>
+                                         <button class="btn btn-primary"> enregistrer </button>
+                                       </form>
+                                    </div>
+                                    </div>
+                                </div>
+                              </div>
+                           
+			   
+                        <div class="col-lg-3">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Langue</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                       
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div>
+                                         <form>
+                                          <input type="text" placeholder="nom de la langue" class="form-control" name="titre">
+                                          <br>
+                                          <select type="text" class="form-control" name="langue">
+                                            <option>debutant</option>
+                                            <option>intermédiaire</option>
+                                            <option>Courant</option>
+                                            <option>professionnel</option>
+                                          </select>
+                                           <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                    
+                                     </div>
+                                </div>
+                           </div>
+                       </div>
+                          
+			  
+			
+			
+			<div class="col-lg-3">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Vos loisirs</h5> 
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                       
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div>
+                                         <form>
+                                          <input type="text" placeholder="vos loisirs" class="form-control" name="loisir">
+                                          <br>
+                                         <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                           <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                    
+                                    </div>
+                                </div>
+                             </div>
+                          </div>
+                          
+                          			
+			</div>	
+                        </div>
+                     </div>
+                </div>
+{% endblock %}
+
+ {% block js %}
+ {{block.super}}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
+    <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
+    <script src="{% static 'js/animateform.js' %}"></script> 
+    <script src="{% static 'js/calendarform.js' %}"></script> 
+ {% endblock %}
+

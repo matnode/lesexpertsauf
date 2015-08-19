@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 # Create your views here.
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -14,13 +16,94 @@ import random, sha, string
 
 
 def index(request):	
-	#On demarre avec le traitement des informations concernants l'enregistrement d'un user
+	#on demarre le processus dauthentification des utilisateurs
+    message=""
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                  login(request, user)
+                  return HttpResponseRedirect(reverse('experts.views.acceuil'))
+            else:
+                  message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> Votre comte a été desactivé </div>'
+        else:
+             message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> email ou mot de passe incorrecte </div>'
 	
-	#return HttpResponse("Hello, world. You're at the experts index.")
-	return render_to_response("../templates/connexion.html", context_instance=RequestContext(request))
+    return render_to_response("../templates/connexion.html",{'message':message}, context_instance=RequestContext(request))
 
 def inscription(request):	
-	#On demarre avec le traitement des informations concernants l'enregistrement d'un user
-	
-	#return HttpResponse("Hello, world. You're at the experts index.")
+	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
+	if request.method =='POST':
+           
+            user = User.objects.create_user(
+                    username = request.POST['username'],
+                    email = request.POST['email'],
+                   password = request.POST['password'],
+                 ) 
+                                
+            human = Human(
+                  user= user,
+                  datecreation = timezone.now(),
+                  #par defaut on initialise certain champ qui ne peuvent pas avoir une valeur null
+                  online=0,
+                  telephone=0,
+                  datenaissance=" ",
+                  
+           )
+                	
+            human.save()
+            	
+            return HttpResponseRedirect(reverse(index))
 	return render_to_response("../templates/inscription.html", context_instance=RequestContext(request))
+	
+def acceuil(request):	
+	# on est sur la page d'acceuil
+	#on envoi sur les informations de l'utilisateur courant
+	
+	currentuser =request
+	
+	return render_to_response("../templates/acceuil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+
+def profil(request,user_id):	
+	# on est sur la page de profil
+	#on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	human= Human.objects.get(pk=currentuser.user.human.id)
+        if request.method== 'POST':
+            if request.POST['nom']:        
+                human.civilite = request.POST['civilite']
+                human.nom = request.POST['nom']
+                human.prenom = request.POST['prenom']
+                human.datenaissance = request.POST['dateanniv']
+                human.signature = request.POST['signature']                
+            if request.POST['telephone']:            
+                human.siteweb = request.POST['siteweb']
+                human.telephone = request.POST['telephone']
+                human.adresse = request.POST['adresse']
+                human.codepostale = request.POST['bp']
+                human.ville = request.POST['ville']
+                
+        human.save()
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+	
+def profilcord(request,user_id):	
+	# on est sur la page de profil
+	#on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	human= Human.objects.get(pk=currentuser.user.human.id)
+        if request.method== 'POST':
+                           
+            if request.POST['telephone']:            
+                human.siteweb = request.POST['siteweb']
+                human.telephone = request.POST['telephone']
+                human.adresse = request.POST['adresse']
+                human.codepostale = request.POST['bp']
+                human.ville = request.POST['ville']
+                
+        human.save()
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+

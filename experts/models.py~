@@ -10,7 +10,7 @@ class Human(models.Model):
     prenom = models.CharField(max_length=200) 
     civilite = models.CharField(max_length=200) 
     online = models.IntegerField()	
-    codepostale = models.CharField(max_length=200)
+    codepostale = models.TextField(max_length=200)
     telephone = models.IntegerField() 
     siteweb = models.TextField() 
     adresse = models.TextField() 
@@ -18,7 +18,8 @@ class Human(models.Model):
     niveauetude = models.CharField(max_length=200)
     signature= models.TextField() 
     ville = models.CharField(max_length=255)
-    datenaissance= models.DateTimeField()
+    datenaissance= models.TextField()
+    datecreation= models.DateTimeField()
 	
     def __unicode__(self):
           return self.nom
@@ -76,29 +77,6 @@ class Mission(models.Model):
     def __unicode__(self):
           return self.entreprise 
 
-class Mission(models.Model):
-    human = models.ForeignKey(Human)
-    titre = models.TextField()
-    description = models.TextField()
-    fonction = models.TextField()
-    entreprise = models.TextField()
-    competenceutilisee = models.TextField()
-    lieu = models.CharField(max_length=255)
-    datedebut = models.DateTimeField()
-    datefin = models.DateTimeField()
-    
-     def __unicode__(self):
-           return self.titre
-     def __unicode__(self):
-           return self.description
-     def __unicode__(self):
-           return self.fonction
-     def __unicode__(self):
-           return self.entreprise
-     def __unicode__(self):
-           return self.competenceutilisee     
-     def __unicode__(self):
-           return self.lieu
 
 class Formation(models.Model):
     human = models.ForeignKey(Human)

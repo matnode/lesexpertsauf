@@ -10,7 +10,7 @@ class Human(models.Model):
     prenom = models.CharField(max_length=200) 
     civilite = models.CharField(max_length=200) 
     online = models.IntegerField()	
-    codepostale = models.CharField(max_length=200)
+    codepostale = models.TextField()
     telephone = models.IntegerField() 
     siteweb = models.TextField() 
     adresse = models.TextField() 
@@ -18,7 +18,8 @@ class Human(models.Model):
     niveauetude = models.CharField(max_length=200)
     signature= models.TextField() 
     ville = models.CharField(max_length=255)
-    datenaissance= models.DateTimeField()
+    datenaissance= models.TextField()
+    datecreation= models.DateTimeField()
 	
     def __unicode__(self):
           return self.nom

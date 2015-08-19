@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.conf.urls.defaults import *
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,4 +8,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
     (r'^inscription/$', 'inscription'),
+    (r'^acceuil/$', 'acceuil'),
+    (r'^profil/(?P<user_id>\d+)/$', 'profil'),
+    (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
 )

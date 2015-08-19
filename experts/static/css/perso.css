@@ -38,7 +38,7 @@ h5 {
   font-weight: 600;
 }
 .nav > li > a {
-  color: #a7b1c2;
+  color: #FFF;
   font-weight: 600;
   padding: 14px 20px 14px 25px;
 }
@@ -69,7 +69,7 @@ h5 {
   border: 0;
 }
 .navbar-default {
-  background-color: transparent;
+  background-color:#50249B;
   border-color: #2f4050;
 }
 .navbar-top-links li {
@@ -377,7 +377,6 @@ body.canvas-menu .navbar-static-side {
   position: fixed;
   width: 220px;
   z-index: 2001;
-  height: 100%;
 }
 body.fixed-sidebar.mini-navbar .navbar-static-side {
   width: 0px;
@@ -7376,6 +7375,7 @@ body.skin-3 {
     z-index: 2001;
     position: absolute;
     width: 220px;
+    height:150%;
   }
   .navbar-top-links .dropdown-messages,
   .navbar-top-links .dropdown-tasks,
