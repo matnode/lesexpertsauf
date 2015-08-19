@@ -7,6 +7,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
+    (r'^deconnexion/$', 'deconnexion'),
     (r'^inscription/$', 'inscription'),
     (r'^acceuil/$', 'acceuil'),
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),

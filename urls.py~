@@ -10,5 +10,5 @@ urlpatterns = patterns('experts.views',
     (r'^inscription/$', 'inscription'),
     (r'^acceuil/$', 'acceuil'),
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
-    (r'^profilcords/(?P<user_id>\d+)/$', 'profil'),
+    (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
 )

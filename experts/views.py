@@ -33,6 +33,12 @@ def index(request):
 	
     return render_to_response("../templates/connexion.html",{'message':message}, context_instance=RequestContext(request))
 
+def deconnexion(request):
+	logout(request)
+	return HttpResponseRedirect(reverse(index))
+
+
+
 def inscription(request):	
 	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
 	if request.method =='POST':
@@ -78,13 +84,7 @@ def profil(request,user_id):
                 human.prenom = request.POST['prenom']
                 human.datenaissance = request.POST['dateanniv']
                 human.signature = request.POST['signature']                
-            if request.POST['telephone']:            
-                human.siteweb = request.POST['siteweb']
-                human.telephone = request.POST['telephone']
-                human.adresse = request.POST['adresse']
-                human.codepostale = request.POST['bp']
-                human.ville = request.POST['ville']
-                
+            
         human.save()
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))

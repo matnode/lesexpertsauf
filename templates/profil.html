@@ -111,7 +111,7 @@
                         <h4>
                           
                                 Mes coordonnees 
-                              {% if currentuser.user.human.telephone != '' %}   
+                              {% if currentuser.user.human.telephone != 0 %}   
                                 <a href="#" style="font-size:10px;" class="update_mycords"> 
                                     <i class="fa fa-pencil"> </i>mettre à jour
                                 </a>
@@ -120,7 +120,7 @@
                        
                             <div class="row text-center">
                                 <div class="col-lg-12">
-                                 {% if currentuser.user.human.telephone == '' %}
+                                 {% if currentuser.user.human.telephone == 0 %}
                                     <form method="post" action="/profilcords/{{currentuser.user.id}}/"> 
                                            {% csrf_token %}
                                           <input type="text" placeholder="site web (ex: ifgu.auf.org)" class="form-control" name="siteweb">
