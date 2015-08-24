@@ -91,6 +91,7 @@
                                           <input id="signature" type="text" placeholder="ex: à vaincre sans périple on triomphe sans gloire!" class="form-control" value="{{currentuser.user.human.signature}}" name="signature">
                                           <br>
                                           <button class="btn btn-primary"> enregistrer </button>
+                                          <button class="btn btn-default rollbackwhoiam" type="reset"> annuler </button>
                                     </form>   
                                     {%endif%}
                                    
@@ -133,7 +134,7 @@
                                           <br>
                                            <input type="text" placeholder="ville" class="form-control" name="ville" required>
                                           <br>
-                                          <button class="btn btn-primary"> enregistrer </button>
+                                          <button class="btn btn-primary"> enregistrer </button> <button class="btn btn-primary" type="reset"> Annuler </button>
                                     </form>
                                  {% else %}
                                    <div style="text-align:left;" class="update_mycords">
@@ -179,6 +180,7 @@
                                            <input type="text" placeholder="ville" class="form-control" name="ville" required value="{{currentuser.user.human.ville}}">
                                           <br>
                                           <button class="btn btn-primary"> enregistrer </button>
+                                         
                                     </form>
                                                                        
                                  {% endif %}
