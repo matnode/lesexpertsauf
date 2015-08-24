@@ -12,4 +12,7 @@ urlpatterns = patterns('experts.views',
     (r'^acceuil/$', 'acceuil'),
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
     (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
+    (r'^profilcompetence/(?P<user_id>\d+)/$', 'profilcompetence'),
+    (r'^modprofilcompetence/(?P<user_id>\d+)/$', 'modprofilcompetence'),
+    (r'^delprofilcompetence/(?P<user_id>\d+)/$', 'delprofilcompetence'),
 )

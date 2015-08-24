@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from experts.models import Human
+from experts.models import Human, Competence
 from django.utils import timezone
 import random, sha, string
 
@@ -77,6 +77,9 @@ def profil(request,user_id):
 	#on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
 	human= Human.objects.get(pk=currentuser.user.human.id)
+	#on reccupère les competence de l'utilisateur courant
+	competenceuser = Competence.objects.filter(human=currentuser.user.human.id)
+	countcompetence = competenceuser.count()
         if request.method== 'POST':
             if request.POST['nom']:        
                 human.civilite = request.POST['civilite']
@@ -86,8 +89,11 @@ def profil(request,user_id):
                 human.signature = request.POST['signature']                
             
         human.save()
-	
-	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+	return render_to_response("../templates/profil.html",
+	                          {'currentuser':currentuser,
+	                          'countcompetence':countcompetence,
+	                          'competenceuser':competenceuser}, 
+	                          context_instance=RequestContext(request))
 	
 def profilcords(request,user_id):	
 	# on est sur la page de profil
@@ -104,6 +110,55 @@ def profilcords(request,user_id):
                 human.ville = request.POST['ville']
                 
         human.save()
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+
+def profilcompetence(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	human= Human.objects.get(pk=currentuser.user.human.id)
+	
+        if request.method== 'POST':
+                           
+            if request.POST['titre']:
+             competence = Competence( 
+                human= human,           
+                nom = request.POST['titre'],
+                description = request.POST['description']
+            )
+                               
+             competence.save()
+             return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+
+def modprofilcompetence(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	competenceuser = Competence.objects.filter(human=currentuser.user.human.id)
+        if request.method== 'POST':
+                           
+            if request.POST['titre']:
+                competenceuser = Competence.objects.get(pk=request.POST['idcompetence'])            
+                competenceuser.nom = request.POST['titre']
+                competenceuser.description = request.POST['description']
+                competenceuser.save()
+            return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+	
+	
+def delprofilcompetence(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+        if request.method== 'POST':
+             competenceuser = Competence.objects.get(pk=request.POST['idcompetencetodel'])
+             competenceuser.delete()            
+             #prevoir un message qui va notifié que l'on a supprimer le message
+        return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 

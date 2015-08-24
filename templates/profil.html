@@ -203,8 +203,9 @@
                         <div class="col-lg-6">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <h5>Vos competences </h5> 
+                                    <h5> Vos competences   </h5> 
                                     <div class="ibox-tools">
+                                        <small class="label label-info">{{countcompetence}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -216,13 +217,57 @@
                                 </div>
                                 <div class="ibox-content">
                                   <div>
-                                     <form>
+                                  
+                                  {% if countcompetence == 0 %}
+                                     <form action="/profilcompetence/{{currentuser.user.id}}/" method="POST">
+                                     {% csrf_token %}
                                           <input type="text" placeholder="titre" class="form-control" name="titre">
                                           <br>
                                           <textarea placeholder="description" class="form-control" name="description"></textarea>
                                            <br>
                                           <button class="btn btn-primary"> enregistrer </button>
-                                    </form>                                    
+                                    </form> 
+                                 {% endif %}   
+                                   <div style="height:275px;overflow:auto;">
+                                   
+                                        {% for competence in competenceuser %}
+                                          <div class="thecompetence" style="margin-top:2%; padding:2%; border-bottom:1px solid rgba(200, 200, 200, 0.36);">
+                                            <span class="label label-primary nomcompetence{{competence.id}}"> {{competence.nom}} </span>
+                                             <span class="pull-right competencetool"> 
+                                             <a class="glyphicon glyphicon-edit modifcompetence" competenceid="{{competence.id}}" style="color:rgba(200, 200, 200, 1);"></a> 
+                                             <a class="glyphicon glyphicon-trash deletecompetence" competenceid="{{competence.id}}" style="color:rgba(200, 200, 200, 1);"></a> </span>
+                                            <br>
+                                            <span class="descripcompetence{{competence.id}}"> {{competence.description}} </span>
+                                           
+                                          </div>
+                                         {% empty %}
+                                          <small>Aucun compétence renseigné pour l'instant</small>
+                                         
+                                        {% endfor %}
+                                        
+                                          <form action="/modprofilcompetence/{{currentuser.user.id}}/" class="modcompetence animated fadeInRight" method="POST" style="display:none;">
+                                          {% csrf_token %}
+                                          <input type="text" placeholder="titre" class="form-control modfieldnomcompetence" name="titre">
+                                          <br>
+                                          <textarea placeholder="description" rows="5" class="form-control  modfieldescripcompetence" name="description"></textarea>
+                                          <input type="hidden" value="" name="idcompetence">
+                                         
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                          <button class="btn btn-default rollbackcompetence" type="reset"> Annuler </button>
+                                    </form> 
+                                     <div>
+                                        <form action="/delprofilcompetence/{{currentuser.user.id}}/" class="delcompetence animated fadeInRight" method="POST" style="display:none;">
+                                            {% csrf_token %}  
+                                            <labe>Voulez-vous vraiment supprimer cette compétence</label>
+                                            <input type="hidden" name="idcompetencetodel"><br> 
+                                            <button class="btn btn-danger" type="submit"> Oui  </button>   
+                                            <button class="btn btn-default rollbackcompetence" type="reset"> Non </button>
+                                        </form> 
+                                     </div>
+                                    
+                                        
+                                  </div> 
+                                                                       
                                   </div>
                                </div>
                              </div>
@@ -391,5 +436,6 @@
     <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
     <script src="{% static 'js/animateform.js' %}"></script> 
     <script src="{% static 'js/calendarform.js' %}"></script> 
+    <script src="{% static 'js/modcompetence.js' %}"></script> 
  {% endblock %}
 
