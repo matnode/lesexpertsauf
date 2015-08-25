@@ -279,7 +279,7 @@
                         <div class="col-lg-6">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <h5>Missions effectues</h5> 
+                                    <h5>Missions effectuées</h5> 
                                     <div class="ibox-tools">
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
@@ -292,23 +292,32 @@
                                 </div>
                                 <div class="ibox-content">
                                      <div>
-                                        <form>
-                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datefin">
+                                        <form action="/profilmission/{{currentuser.user.id}}/" method="POST">
+                                        {% csrf_token %}
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datefin" required>
                                               <br>
-                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut">
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
                                               <br>
-                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise">
+                                              <input type="text" placeholder="titre de la mission" class="form-control" name="titre" required>                                            
                                               <br>
-                                              <input type="text" placeholder="poste occupé" class="form-control" name="fonction">
+                                              <input type="text" placeholder="poste occupé" class="form-control" name="fonction" required>
                                               <br>
-                                              <input type="text" placeholder="titre de la mission" class="form-control" name="titre">
+                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" required>
                                               <br>
-                                              <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                              <textarea placeholder="description de la mission" class="form-control" name="description"></textarea>
                                               <br>
-                                               <textarea placeholder="compétence utilisé" class="form-control" name="competences"></textarea>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" required></textarea>
                                               <br>
                                               <button class="btn btn-primary"> enregistrer </button>
                                         </form>   
+                                        
+                                         {% for mission in missionuser %}
+                                            <div>{{mission.titre}}</div>
+                                         {% empty %}
+                                          <small>Aucune mission renseigné pour l'instant</small>
+                                         
+                                        {% endfor %}
+                                        
                                       </div>
                                </div>
                             </div>

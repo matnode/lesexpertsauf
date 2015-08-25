@@ -63,8 +63,8 @@ class Mission(models.Model):
     competenceutilisee = models.TextField()
     fonction = models.TextField()
     entreprise = models.CharField(max_length=255)
-    datedebut = models.DateTimeField()
-    datefin = models.DateTimeField()
+    datedebut = models.CharField(max_length=255)
+    datefin = models.CharField(max_length=255)
         
     def __unicode__(self):
           return self.titre

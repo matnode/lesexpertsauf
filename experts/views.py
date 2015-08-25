@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from experts.models import Human, Competence
+from experts.models import Human, Competence, Mission
 from django.utils import timezone
 import random, sha, string
 
@@ -77,9 +77,12 @@ def profil(request,user_id):
 	#on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
 	human= Human.objects.get(pk=currentuser.user.human.id)
-	#on reccupère les competence de l'utilisateur courant
+	#on reccupère les competences de l'utilisateur courant
 	competenceuser = Competence.objects.filter(human=currentuser.user.human.id)
 	countcompetence = competenceuser.count()
+	#on reccupère les missions de l'utilisateur courant
+	missionuser = Mission.objects.filter(human=currentuser.user.human.id)
+	countmission = missionuser.count()
         if request.method== 'POST':
             if request.POST['nom']:        
                 human.civilite = request.POST['civilite']
@@ -91,9 +94,11 @@ def profil(request,user_id):
         human.save()
 	return render_to_response("../templates/profil.html",
 	                          {'currentuser':currentuser,
-	                          'countcompetence':countcompetence,
-	                          'competenceuser':competenceuser}, 
-	                          context_instance=RequestContext(request))
+	                           'countcompetence':countcompetence,
+	                           'competenceuser':competenceuser,
+	                           'missionuser':missionuser,
+	                           'countmission':countmission}, 
+	                           context_instance=RequestContext(request))
 	
 def profilcords(request,user_id):	
 	# on est sur la page de profil
@@ -159,6 +164,31 @@ def delprofilcompetence(request,user_id):
              competenceuser.delete()            
              #prevoir un message qui va notifié que l'on a supprimer le message
         return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+	
+def profilmission(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	human= Human.objects.get(pk=currentuser.user.human.id)
+	
+        if request.method== 'POST':
+                                   
+            if request.POST['titre']:
+             mission = Mission( 
+                human= human,           
+                datedebut = request.POST['datedebut'],
+                datefin = request.POST['datefin'],
+                titre = request.POST['titre'],
+                fonction = request.POST['fonction'],
+                entreprise = request.POST['entreprise'],
+                description = request.POST['description'],
+                competenceutilisee = request.POST['competence']
+            )
+                               
+             mission.save()
+             return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 

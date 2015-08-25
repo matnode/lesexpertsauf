@@ -10,7 +10,7 @@ class Human(models.Model):
     prenom = models.CharField(max_length=200) 
     civilite = models.CharField(max_length=200) 
     online = models.IntegerField()	
-    codepostale = models.TextField(max_length=200)
+    codepostale = models.TextField()
     telephone = models.IntegerField() 
     siteweb = models.TextField() 
     adresse = models.TextField() 
