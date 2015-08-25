@@ -281,6 +281,7 @@
                                 <div class="ibox-title">
                                     <h5>Missions effectuées</h5> 
                                     <div class="ibox-tools">
+                                        <small class="label label-info">{{countmission}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -308,11 +309,27 @@
                                               <br>
                                                <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" required></textarea>
                                               <br>
-                                              <button class="btn btn-primary"> enregistrer </button>
+                                              <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                              <button class="btn btn-default" type="reset"> Annuler </button>
                                         </form>   
                                         
                                          {% for mission in missionuser %}
-                                            <div>{{mission.titre}}</div>
+                                            <div style="margin-top:2%;">
+                                              <span style="font-weight:600; font-size:16px;">{{mission.titre}}</span><br>
+                                                du <span class="label lable-primary">  {{mission.datedebut}} </span>
+                                                au  <span class="label lable-primary">  {{mission.datefin}} </span><br><br>
+                                              <span style="padding:1%; font-weight: 600;">Entreprise:</span> {{mission.entreprise}} <br>
+                                              <span style="padding:1%; font-weight: 600;">Votre fonction:</span> {{mission.fonction}} <br>
+                                              <span style="padding:1%; font-weight: 600;">
+                                                Competence utilisées:
+                                              </span>
+                                               {{mission.competenceutilisee}}
+                                              <br>
+                                              <span style="padding:1%; font-weight: 600;">
+                                                Description de la mission
+                                              </span>: {{mission.description}}
+                                              <br>
+                                            </div>
                                          {% empty %}
                                           <small>Aucune mission renseigné pour l'instant</small>
                                          
@@ -332,8 +349,9 @@
                         <div class="col-lg-6">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <h5>Formation</h5> 
+                                    <h5>Formations</h5> 
                                     <div class="ibox-tools">
+                                         <small class="label label-info">{{countformation}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -345,23 +363,41 @@
                                 </div>
                                 <div class="ibox-content">
                                     <div>
-                                       <form>
-                                          <input type="text" placeholder="date de début" class="form-control dp1" name="datefin">
+                                       <form action="/profilformation/{{currentuser.user.id}}/" method="POST">
+                                       {% csrf_token %} 
+                                          <input type="text" placeholder="date de début" class="form-control dp1" name="datefin" required>
                                           <br>
-                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut">
+                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
                                           <br>
-                                          <input type="text" placeholder="libellé de la formation" class="form-control" name="intitule">
+                                          <input type="text" placeholder="libellé de la formation" class="form-control" name="titre" required>
                                            <br>
-                                             <input type="text" placeholder="le diplome obtenu" class="form-control" name="diplome">
+                                             <input type="text" placeholder="le diplome obtenu" class="form-control" name="diplome" required>
                                             <br>
-                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="diplome">
+                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="ecole" required>
                                             <br>
-                                            <input type="text" placeholder="le lieu de la formation" class="form-control" name="lieu">
+                                            <input type="text" placeholder="le lieu de la formation" class="form-control" name="lieu" required>
                                             <br>
                                          <textarea placeholder="description" class="form-control" name="description"></textarea>
                                            <br>
-                                         <button class="btn btn-primary"> enregistrer </button>
+                                         <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                         <button class="btn btn-default" type="reset"> Annuler </button>
                                        </form>
+                                       
+                                        {% for formation in formationuser %}
+                                            <div style="margin-top:2%;">
+                                              <span style="font-weight:600; font-size:16px;">{{formation.intitule}}</span><br>
+                                                du <span class="label lable-primary">  {{formation.datedebut}} </span>
+                                                au  <span class="label lable-primary">  {{formation.datefin}} </span><br><br>
+                                              <span style="padding:1%; font-weight: 600;">Diplome obtenu:</span> {{formation.diplome}} <br>
+                                              <span style="padding:1%; font-weight: 600;">Ecole:</span> {{formation.ecole}} <br>
+                                              <span style="padding:1%; font-weight: 600;">Lieu:</span> {{formation.lieu}} <br>
+                                              
+                                            </div>
+                                         {% empty %}
+                                          <small>Aucune formation renseignée pour l'instant</small>
+                                         
+                                        {% endfor %}
+                                       
                                     </div>
                                     </div>
                                 </div>

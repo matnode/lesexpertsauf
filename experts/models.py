@@ -85,8 +85,8 @@ class Formation(models.Model):
     diplome = models.TextField()
     lieu = models.CharField(max_length=255)
     ecole = models.CharField(max_length=255)
-    datedebut = models.DateTimeField()
-    datefin = models.DateTimeField()
+    datedebut = models.CharField(max_length=255)
+    datefin = models.CharField(max_length=255)
     
     def __unicode__(self):
           return self.intitule

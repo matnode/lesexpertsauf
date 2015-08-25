@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from experts.models import Human, Competence, Mission
+from experts.models import Human, Competence, Mission, Formation
 from django.utils import timezone
 import random, sha, string
 
@@ -83,6 +83,9 @@ def profil(request,user_id):
 	#on reccupère les missions de l'utilisateur courant
 	missionuser = Mission.objects.filter(human=currentuser.user.human.id)
 	countmission = missionuser.count()
+	#on reccupère les formations de l'utilisateur courant
+	formationuser = Formation.objects.filter(human=currentuser.user.human.id)
+	countformation = formationuser.count()
         if request.method== 'POST':
             if request.POST['nom']:        
                 human.civilite = request.POST['civilite']
@@ -97,7 +100,9 @@ def profil(request,user_id):
 	                           'countcompetence':countcompetence,
 	                           'competenceuser':competenceuser,
 	                           'missionuser':missionuser,
-	                           'countmission':countmission}, 
+	                           'countmission':countmission,
+	                           'formationuser':formationuser,
+	                           'countformation':countformation}, 
 	                           context_instance=RequestContext(request))
 	
 def profilcords(request,user_id):	
@@ -192,3 +197,27 @@ def profilmission(request,user_id):
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 
+def profilformation(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	human= Human.objects.get(pk=currentuser.user.human.id)
+	
+        if request.method== 'POST':
+                                   
+            if request.POST['titre']:
+             formation = Formation( 
+                human= human,           
+                datedebut = request.POST['datedebut'],
+                datefin = request.POST['datefin'],
+                intitule = request.POST['titre'],
+                lieu = request.POST['lieu'],
+                ecole = request.POST['ecole'],
+                diplome = request.POST['diplome'],
+                description = request.POST['description']
+            )
+                               
+             formation.save()
+             return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	
+	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
