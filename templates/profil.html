@@ -293,11 +293,12 @@
                                 </div>
                                 <div class="ibox-content">
                                      <div>
+                                       {% if countmission == 0 %}
                                         <form action="/profilmission/{{currentuser.user.id}}/" method="POST">
                                         {% csrf_token %}
-                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datefin" required>
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" required>
                                               <br>
-                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" required>
                                               <br>
                                               <input type="text" placeholder="titre de la mission" class="form-control" name="titre" required>                                            
                                               <br>
@@ -312,29 +313,74 @@
                                               <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                               <button class="btn btn-default" type="reset"> Annuler </button>
                                         </form>   
-                                        
+                                       {% endif %} 
                                          {% for mission in missionuser %}
-                                            <div style="margin-top:2%;">
-                                              <span style="font-weight:600; font-size:16px;">{{mission.titre}}</span><br>
-                                                du <span class="label lable-primary">  {{mission.datedebut}} </span>
-                                                au  <span class="label lable-primary">  {{mission.datefin}} </span><br><br>
-                                              <span style="padding:1%; font-weight: 600;">Entreprise:</span> {{mission.entreprise}} <br>
-                                              <span style="padding:1%; font-weight: 600;">Votre fonction:</span> {{mission.fonction}} <br>
-                                              <span style="padding:1%; font-weight: 600;">
-                                                Competence utilisées:
+                                            <div style="margin-top:2%;" class="themission">
+                                              <span class=" titre{{mission.id}}" style="font-weight:600; font-size:16px;">{{mission.titre}}</span><br>
+                                              <span class="pull-right competencetool"> 
+                                                 <a class="glyphicon glyphicon-edit modifmission" missionid="{{mission.id}}" style="color:rgba(200, 200, 200, 1);" >
+                                                 </a> 
+                                                 <a class="glyphicon glyphicon-trash deletemission" missionid="{{mission.id}}" style="color:rgba(200, 200, 200, 1);">
+                                                 </a> 
                                               </span>
-                                               {{mission.competenceutilisee}}
+                                             
+                                                du <span class="label datedebut{{mission.id}}">{{mission.datedebut}}</span>
+                                                   
+                                                au <span class="label datefin{{mission.id}}">{{mission.datefin}}</span>
+                                                   <br><br>
+                                                   
+                                              <span style="padding:1%; font-weight:600;">Entreprise:</span> 
+                                                <span class=entreprise{{mission.id}}> {{mission.entreprise}}</span> <br>
+                                             
+                                              <span style="padding:1%; font-weight:600;">Votre fonction:</span>
+                                                <span class="fonction{{mission.id}}">{{mission.fonction}}</span> <br>
+                                              
+                                              <span style="padding:1%; font-weight:600;">
+                                                Compétence utilisées:
+                                              </span>                                              
+                                              <span class="competence{{mission.id}}">{{mission.competenceutilisee}}</span>
                                               <br>
-                                              <span style="padding:1%; font-weight: 600;">
-                                                Description de la mission
-                                              </span>: {{mission.description}}
+                                              
+                                              <span style="padding:1%; font-weight:600;">                                               
+                                                 Description de la mission:
+                                              </span>
+                                              <span class="description{{mission.id}}">{{mission.description}}</span>                                              
                                               <br>
+                                              
                                             </div>
                                          {% empty %}
-                                          <small>Aucune mission renseigné pour l'instant</small>
-                                         
+                                          <small>Aucune mission renseigné pour l'instant</small>                                         
                                         {% endfor %}
                                         
+                                          <form action="/modprofilmission/{{currentuser.user.id}}/" method="POST" class="modmission animated fadeInRight" method="POST" style="display:none;" >
+                                        {% csrf_token %}
+                                          <input type="text" placeholder="date de début" class="form-control dp1 moddatedebut" name="datedebut" required>
+                                              <br>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1 moddatefin" name="datefin" required>
+                                              <br>
+                                              <input type="text" placeholder="titre de la mission" class="form-control modtitre" name="titre" required>                                            
+                                              <br>
+                                              <input type="text" placeholder="poste occupé" class="form-control modfonction" name="fonction" required>
+                                              <br>
+                                              <input type="text" placeholder="entreprise" class="form-control modentreprise" name="entreprise" required>
+                                              <input type="hidden" class="form-control idthismission" name="idthismission">
+                                              <br>
+                                              <textarea placeholder="description de la mission" class="form-control moddescription" name="description"></textarea>
+                                              <br>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control modcompetence" name="competence" required></textarea>
+                                              <br>
+                                              <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                              <button class="btn btn-default rollbackmission" type="reset"> Annuler </button>
+                                        </form>
+                                        
+                                         <form action="/delprofilmission/{{currentuser.user.id}}/" class="delmission animated fadeInRight" method="POST" style="display:none;">
+                                            {% csrf_token %}  
+                                            <labe>Voulez-vous vraiment supprimer cette compétence</label>
+                                            <input type="hidden" name="idmissiontodel"><br> 
+                                            <button class="btn btn-danger" type="submit"> Oui  </button>   
+                                            <button class="btn btn-default rollbackmission" type="reset"> Non </button>
+                                        </form> 
+                                           
                                       </div>
                                </div>
                             </div>
@@ -351,7 +397,7 @@
                                 <div class="ibox-title">
                                     <h5>Formations</h5> 
                                     <div class="ibox-tools">
-                                         <small class="label label-info">{{countformation}}</small> 
+                                        <small class="label label-info">{{countformation}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -362,10 +408,11 @@
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div>
-                                       <form action="/profilformation/{{currentuser.user.id}}/" method="POST">
+                                    <div class="theformation">
+                                     {% if countformation == 0 %}
+                                      <form action="/profilformation/{{currentuser.user.id}}/" method="POST">
                                        {% csrf_token %} 
-                                          <input type="text" placeholder="date de début" class="form-control dp1" name="datefin" required>
+                                          <input type="text" placeholder="date de début" class="form-control dp1 mod" name="datefin" required>
                                           <br>
                                           <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
                                           <br>
@@ -382,23 +429,72 @@
                                          <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                          <button class="btn btn-default" type="reset"> Annuler </button>
                                        </form>
+                                        
+                                     {% endif %}
+                                       
                                        
                                         {% for formation in formationuser %}
-                                            <div style="margin-top:2%;">
-                                              <span style="font-weight:600; font-size:16px;">{{formation.intitule}}</span><br>
-                                                du <span class="label lable-primary">  {{formation.datedebut}} </span>
-                                                au  <span class="label lable-primary">  {{formation.datefin}} </span><br><br>
-                                              <span style="padding:1%; font-weight: 600;">Diplome obtenu:</span> {{formation.diplome}} <br>
-                                              <span style="padding:1%; font-weight: 600;">Ecole:</span> {{formation.ecole}} <br>
-                                              <span style="padding:1%; font-weight: 600;">Lieu:</span> {{formation.lieu}} <br>
+                                            <div style="margin-top:2%;" class="theformation">
+                                              <span style="font-weight:600; font-size:16px;" class="formationtitre{{formation.id}}">{{formation.intitule}}</span><br>
+                                                 <span class="pull-right competencetool"> 
+                                                 <a class="glyphicon glyphicon-edit modiformation" formationid="{{formation.id}}" style="color:rgba(200, 200, 200, 1);" >
+                                                 </a> 
+                                                 <a class="glyphicon glyphicon-trash deleteformation" formationid="{{formation.id}}" style="color:rgba(200, 200, 200, 1);">
+                                                 </a>
+                                                  
+                                              </span>
+                                              
+                                                du <span class="label lable-primary formationdatedebut{{formation.id}}">{{formation.datedebut}}</span>
+                                                au <span class="label lable-primary formationdatefin{{formation.id}}">{{formation.datefin}}</span><br><br>
+                                               
+                                                  <span style="padding:1%; font-weight: 600;">Diplome obtenu:</span> 
+                                                  <span class="formationdiplome{{formation.id}}">{{formation.diplome}}</span> <br>
+                                                  
+                                                  <span style="padding:1%; font-weight: 600;">Ecole:</span> 
+                                                  <span class="formationecole{{formation.id}}">{{formation.ecole}}</span> <br>
+                                                  
+                                                  <span style="padding:1%; font-weight: 600;">Lieu:</span>
+                                                  <span class="formationlieu{{formation.id}}">{{formation.lieu}}</span> <br>
+                                                  
+                                                 <span style="padding:1%; font-weight: 600;">Description de la formation:</span>
+                                                  <span class="formationdescription{{formation.id}}">{{formation.description}}</span> <br>
                                               
                                             </div>
                                          {% empty %}
-                                          <small>Aucune formation renseignée pour l'instant</small>
-                                         
+                                          <small>Aucune formation renseignée pour l'instant</small>                                         
                                         {% endfor %}
+                                        </div> 
+                                 
+                                       <form action="/modprofilformation/{{currentuser.user.id}}/" method="POST" class="modformation animated fadeInRight" style="display:none;" >
+                                       {% csrf_token %} 
+                                          <input type="text" placeholder="date de début" class="form-control dp1 modformationdatedebut" name="datedebut" required>
+                                          <br>
+                                          <input type="text" placeholder="date de fin" class="form-control dp1 modformationdatefin" name="datefin" required>
+                                          <br>
+                                          <input type="text" placeholder="libellé de la formation" class="form-control modformationtitre" name="titre" required>
+                                           <br>
+                                             <input type="text" placeholder="le diplome obtenu" class="form-control modformationdiplome" name="diplome" required>
+                                            <br>
+                                            <input type="text" placeholder="dans quelle école?" class="form-control modformationecole" name="ecole" required>
+                                            <br>
+                                            <input type="text" placeholder="le lieu de la formation" class="form-control modformationlieu" name="lieu" required>
+                                              <input type="hidden"  class="idthisformation" name="idthisformation">
+                                            <br>
+                                         <textarea placeholder="description" class="form-control modformationdescription" name="description"></textarea>
+                                           <br>
+                                         <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                         <button class="btn btn-default rollbackformation" type="reset"> Annuler </button>
+                                       </form>
+                                        
+                                         <form action="/delprofilformation/{{currentuser.user.id}}/" class="delformation animated fadeInRight" method="POST" style="display:none;">
+                                            {% csrf_token %}  
+                                            <labe>Voulez-vous vraiment supprimer cette formation</label>
+                                            <input type="hidden" name="idformationtodel"><br> 
+                                            <button class="btn btn-danger" type="submit"> Oui  </button>   
+                                            <button class="btn btn-default rollbackformation" type="reset"> Non </button>
+                                        </form> 
                                        
-                                    </div>
+                                   
                                     </div>
                                 </div>
                               </div>
@@ -409,6 +505,7 @@
                                 <div class="ibox-title">
                                     <h5>Langue</h5>
                                     <div class="ibox-tools">
+                                        <small class="label label-info">{{countlangue}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -419,21 +516,66 @@
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div>
-                                         <form>
-                                          <input type="text" placeholder="nom de la langue" class="form-control" name="titre">
-                                          <br>
-                                          <select type="text" class="form-control" name="langue">
-                                            <option>debutant</option>
-                                            <option>intermédiaire</option>
-                                            <option>Courant</option>
-                                            <option>professionnel</option>
-                                          </select>
-                                           <br>
-                                          <button class="btn btn-primary"> enregistrer </button>
-                                    </form>
+                                    <div class="thelangue">
+                                        {% if countlangue == 0 %}
+                                         <form method="POST" action="/profilangue/{{currentuser.user.id}}/">
+                                         {% csrf_token %}
+                                              <input type="text" placeholder="nom de la langue" class="form-control" name="nom" required>
+                                              <br>
+                                              <select type="text" class="form-control" name="niveau" required>
+                                                <option></option>
+                                                <option>debutant</option>
+                                                <option>intermédiaire</option>
+                                                <option>Courant</option>
+                                                <option>professionnel</option>
+                                              </select>
+                                               <br>
+                                              <button class="btn btn-primary"> enregistrer </button>
+                                               <button class="btn btn-default rollbacklangue"> annuler </button>
+                                          </form>
+                                         {% endif %} 
+                                         
+                                         {% for langue in langueuser%}
+                                            <span class="pull-right competencetool"> 
+                                                 <a class="glyphicon glyphicon-edit modiflangue" langueid="{{langue.id}}" style="color:rgba(200, 200, 200, 1);" >
+                                                 </a> 
+                                                 <a class="glyphicon glyphicon-trash deletelangue" langueid="{{langue.id}}" style="color:rgba(200, 200, 200, 1);">
+                                                 </a>                                                  
+                                            </span>
+                                            <span class="nomlangue{{langue.id}}">{{langue.nom}}</span> -
+                                            </span class="niveaulangue{{langue.id}}">{{langue.niveau}}</span>
+                                          {% empty %}
+                                           <small>Aucune langue renseigné jusqu'ici</small>
+                                          {% endfor %}
+                                          </div>
+                                           
+                                           <form method="POST" action="/modprofilangue/{{currentuser.user.id}}/" class="modlangue animated fadeInRight" method="POST" style="display:none;" >
+                                           {% csrf_token %}
+                                              <input type="text" placeholder="nom de la langue" class="form-control modlanguenom" name="nom" required>  
+                                              <br>
+                                             
+                                              <select type="text" class="form-control" name="niveau" required>
+                                            
+                                                <option></option>
+                                                <option>debutant</option>
+                                                <option>intermédiaire</option>
+                                                <option>Courant</option>
+                                                <option>professionnel</option>
+                                              </select>
+                                              <input type="hidden" class="form-control idthislangue" name="idthislangue">
+                                               <br>
+                                               <button class="btn btn-primary"> enregistrer </button>
+                                               <button class="btn btn-default rollbacklangue"> annuler </button>
+                                          </form>
+                                          
+                                          <form action="/delprofilangue/{{currentuser.user.id}}/" class="delangue animated fadeInRight" method="POST" style="display:none;">
+                                            {% csrf_token %}  
+                                            <labe>Voulez-vous vraiment supprimer cette langue</label>
+                                            <input type="hidden" name="idlanguetodel"><br> 
+                                            <button class="btn btn-danger" type="submit"> Oui  </button>   
+                                            <button class="btn btn-default rollbacklangue" type="reset"> Non </button>
+                                        </form> 
                                     
-                                     </div>
                                 </div>
                            </div>
                        </div>
@@ -446,6 +588,7 @@
                                 <div class="ibox-title">
                                     <h5>Vos loisirs</h5> 
                                     <div class="ibox-tools">
+                                        <small class="label label-info">{{countloisir}}</small> 
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
@@ -456,16 +599,51 @@
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div>
-                                         <form>
-                                          <input type="text" placeholder="vos loisirs" class="form-control" name="loisir">
-                                          <br>
-                                         <textarea placeholder="description" class="form-control" name="description"></textarea>
-                                           <br>
-                                          <button class="btn btn-primary"> enregistrer </button>
-                                    </form>
-                                    
+                                    <div class="theloisir">
+                                        {% if countloisir == 0 %}
+                                         <form method="POST" action="/profiloisir/{{currentuser.user.id}}/">
+                                         {% csrf_token %}
+                                              <input type="text" placeholder="vos loisirs" class="form-control" name="nom" required>
+                                              <br>
+                                              <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                              <br>
+                                              <button class="btn btn-primary"> enregistrer </button>
+                                              <button class="btn btn-default rollbackloisir "> annuler </button>
+                                         </form>
+                                        {% endif %} 
+                                         {% for loisir in loisiruser %}
+                                            <span class="pull-right competencetool"> 
+                                                 <a class="glyphicon glyphicon-edit modifloisir" loisirid="{{loisir.id}}" style="color:rgba(200, 200, 200, 1);" >
+                                                 </a> 
+                                                 <a class="glyphicon glyphicon-trash deleteloisir" loisirid="{{loisir.id}}" style="color:rgba(200, 200, 200, 1);">
+                                                 </a>                                                  
+                                            </span>
+                                              
+                                            <span class="nomloisir{{loisir.id}}">{{loisir.titre}}</span> <br>
+                                            <span class="descriptionloisir{{loisir.id}}">{{loisir.description}}</span>
+                                           {%empty%}
+                                          <small> Aucun loisir renseigné jusqu'ici </small>
+                                         {% endfor %}
                                     </div>
+                                        
+                                         <form method="POST" action="/modprofiloisir/{{currentuser.user.id}}/" class="modloisir animated fadeInRight" method="POST" style="display:none;">
+                                         {% csrf_token %}
+                                              <input type="text" placeholder="vos loisirs" class="form-control modloisirnom" name="nom" required>
+                                              <br>
+                                              <textarea placeholder="description" class="form-control modloisirdescription" name="description"></textarea>
+                                              <input type="hidden" class="form-control idthisloisir" name="idthisloisir">
+                                              <br>
+                                              <button class="btn btn-primary"> enregistrer </button>
+                                              <button class="btn btn-default rollbackloisir "> annuler </button>
+                                         </form>
+                                        
+                                         <form action="/delprofiloisir/{{currentuser.user.id}}/" class="deloisir animated fadeInRight" method="POST" style="display:none;">
+                                            {% csrf_token %}  
+                                            <labe>Voulez-vous vraiment supprimer ce loisir</label>
+                                            <input type="hidden" name="idloisirtodel"><br> 
+                                            <button class="btn btn-danger" type="submit"> Oui </button>   
+                                            <button class="btn btn-default rollbackloisir" type="reset"> Non </button>
+                                        </form> 
                                 </div>
                              </div>
                           </div>
