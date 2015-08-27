@@ -19,8 +19,16 @@ $('.modifcompetence').on('click', function(){
      
    });
    
+});
+
+
+$('.addcompetence').on('click', function(){
+    
+   $('.thecompetence').addClass('animated bounceOutUp').fadeOut();   
+   $('.newcompetence').fadeIn();
    
 });
+
 
 $('.deletecompetence').on('click', function(){
    
@@ -77,6 +85,14 @@ $('.modifmission').on('click', function(){
 });
 
 
+$('.addmission').on('click', function(){
+    
+   $('.themission').addClass('animated bounceOutUp').fadeOut();   
+   $('.newmission').fadeIn();
+   
+});
+
+
 $('.deletemission').on('click', function(){
    
     missionid=$(this).attr('missionid');
@@ -95,6 +111,12 @@ $('.deletemission').on('click', function(){
 });
 
 
+$('.addformation').on('click', function(){
+    
+   $('.theformation').addClass('animated bounceOutUp').fadeOut();   
+   $('.newformation').fadeIn();
+   
+});
 
 
 $('.modiformation').on('click', function(){
@@ -150,6 +172,15 @@ $('.deleteformation').on('click', function(){
    
 });
 
+
+$('.addlangue').on('click', function(){
+    
+   $('.thelangue').addClass('animated bounceOutUp').fadeOut();   
+   $('.newlangue').fadeIn();
+   
+});
+
+
 $('.modiflangue').on('click', function(){
    
     langueid=$(this).attr('langueid');
@@ -191,21 +222,10 @@ $('.deletelangue').on('click', function(){
 });
 
 
-
-$('.deleteloisir').on('click', function(){
-   
-   langueid=$(this).attr('loisirid');   
-   
-   //on ajoute charge les valeurs à supprimer dans le du formulaire  
-   $('[name="idloisirtodel"]').empty().val(langueid);
-   $('.theloisir').addClass('animated bounceOutUp').fadeOut();
-   $('.deloisir').show();
-   
-   //si on annule on revient sur la liste des compétences
-   $('.rollbackloisir').on('click', function(){
-     $('.theloisir').removeClass('animated bounceOutUp').fadeIn(500);
-     $('.deloisir').hide()
-   });
+$('.addloisir').on('click', function(){
+    
+   $('.theloisir').addClass('animated bounceOutUp').fadeOut();   
+   $('.newloisir').fadeIn();
    
 });
 
@@ -230,6 +250,23 @@ $('.modifloisir').on('click', function(){
        $('.modloisir').hide();
    });
    
+});
+
+
+$('.deleteloisir').on('click', function(){
+   
+   langueid=$(this).attr('loisirid');   
+   
+   //on ajoute charge les valeurs à supprimer dans le du formulaire  
+   $('[name="idloisirtodel"]').empty().val(langueid);
+   $('.theloisir').addClass('animated bounceOutUp').fadeOut();
+   $('.deloisir').show();
+   
+   //si on annule on revient sur la liste des compétences
+   $('.rollbackloisir').on('click', function(){
+     $('.theloisir').removeClass('animated bounceOutUp').fadeIn(500);
+     $('.deloisir').hide()
+   });
    
 });
 

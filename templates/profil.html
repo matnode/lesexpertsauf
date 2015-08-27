@@ -64,6 +64,7 @@
                                           class="form-control" name="signature">
                                           <br>
                                           <button class="btn btn-primary"> enregistrer </button>
+                                          <button class="btn btn-default"> annuler </button>
                                     </form>
                                     
                                     {% else %}
@@ -205,23 +206,26 @@
                         <div class="col-lg-6">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <h5> Vos competences   </h5> 
+                                    <h5> Vos compétences   </h5> 
                                     <div class="ibox-tools">
+                                        
                                         <small class="label label-info">{{countcompetence}}</small> 
+                                          
+                                        <a class="label label-danger addcompetence">
+                                            <span class="glyphicon glyphicon-plus" style="color:#fff;"> </span>
+                                        </a> 
+                                       
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                         
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
                                   <div>
                                   
                                   {% if countcompetence == 0 %}
-                                     <form action="/profilcompetence/{{currentuser.user.id}}/" method="POST">
+                                     <form action="/profilcompetence/{{currentuser.user.id}}/" class="newcompetence" method="POST">
                                      {% csrf_token %}
                                           <input type="text" placeholder="titre" class="form-control" name="titre">
                                           <br>
@@ -229,7 +233,17 @@
                                            <br>
                                           <button class="btn btn-primary"> enregistrer </button>
                                     </form> 
-                                 {% endif %}   
+                                  {% elif countcompetence != 0 %} 
+                                     <form action="/profilcompetence/{{currentuser.user.id}}/" class="newcompetence" method="POST" style="display:none;">
+                                     {% csrf_token %}
+                                          <input type="text" placeholder="titre" class="form-control" name="titre">
+                                          <br>
+                                          <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                           <br>
+                                          <button class="btn btn-primary"> enregistrer </button>
+                                    </form>
+                                  {% endif %} 
+                                   
                                    <div style="height:275px;overflow:auto;">
                                    
                                         {% for competence in competenceuser %}
@@ -281,14 +295,18 @@
                                 <div class="ibox-title">
                                     <h5>Missions effectuées</h5> 
                                     <div class="ibox-tools">
-                                        <small class="label label-info">{{countmission}}</small> 
+                                        
+                                         <small class="label label-info">{{countmission}}</small> 
+                                         
+                                         <a class="addmission label label-danger"> 
+                                            <span class="glyphicon glyphicon-plus" style="color:#fff;"></span> 
+                                         </a>
+                                    
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                         
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
+                                        
                                     </div>
                                 </div>
                                 <div class="ibox-content">
@@ -313,7 +331,28 @@
                                               <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                               <button class="btn btn-default" type="reset"> Annuler </button>
                                         </form>   
-                                       {% endif %} 
+                                       {% elif countmission != 0%}                                        
+                                           <form action="/profilmission/{{currentuser.user.id}}/" class="newmission" style="display:none;" method="POST">
+                                        {% csrf_token %}
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" required>
+                                              <br>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" required>
+                                              <br>
+                                              <input type="text" placeholder="titre de la mission" class="form-control" name="titre" required>                                            
+                                              <br>
+                                              <input type="text" placeholder="poste occupé" class="form-control" name="fonction" required>
+                                              <br>
+                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" required>
+                                              <br>
+                                              <textarea placeholder="description de la mission" class="form-control" name="description"></textarea>
+                                              <br>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" required></textarea>
+                                              <br>
+                                              <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                              <button class="btn btn-default rollbackmission" type="reset"> Annuler </button>
+                                        </form> 
+                                       {% endif %}
+                                       
                                          {% for mission in missionuser %}
                                             <div style="margin-top:2%;" class="themission">
                                               <span class=" titre{{mission.id}}" style="font-weight:600; font-size:16px;">{{mission.titre}}</span><br>
@@ -398,17 +437,19 @@
                                     <h5>Formations</h5> 
                                     <div class="ibox-tools">
                                         <small class="label label-info">{{countformation}}</small> 
+                                       
+                                        <a class="label label-danger addformation">
+                                            <span class="glyphicon glyphicon-plus" style="color:#fff;"> </span>
+                                        </a>
+                                       
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                       
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div class="theformation">
+                                   
                                      {% if countformation == 0 %}
                                       <form action="/profilformation/{{currentuser.user.id}}/" method="POST">
                                        {% csrf_token %} 
@@ -430,9 +471,29 @@
                                          <button class="btn btn-default" type="reset"> Annuler </button>
                                        </form>
                                         
+                                     {% elif countformation != 0 %}
+                                        <form action="/profilformation/{{currentuser.user.id}}/" method="POST" class="newformation" style="display:none;">
+                                       {% csrf_token %} 
+                                          <input type="text" placeholder="date de début" class="form-control dp1 mod" name="datefin" required>
+                                          <br>
+                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
+                                          <br>
+                                          <input type="text" placeholder="libellé de la formation" class="form-control" name="titre" required>
+                                           <br>
+                                             <input type="text" placeholder="le diplome obtenu" class="form-control" name="diplome" required>
+                                            <br>
+                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="ecole" required>
+                                            <br>
+                                            <input type="text" placeholder="le lieu de la formation" class="form-control" name="lieu" required>
+                                            <br>
+                                         <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                           <br>
+                                         <button class="btn btn-primary" type="submit"> Enregistrer </button>
+                                         <button class="btn btn-default" type="reset"> Annuler </button>
+                                       </form>                                        
                                      {% endif %}
-                                       
-                                       
+                                     
+                                      <div class="theformation">                                       
                                         {% for formation in formationuser %}
                                             <div style="margin-top:2%;" class="theformation">
                                               <span style="font-weight:600; font-size:16px;" class="formationtitre{{formation.id}}">{{formation.intitule}}</span><br>
@@ -506,17 +567,20 @@
                                     <h5>Langue</h5>
                                     <div class="ibox-tools">
                                         <small class="label label-info">{{countlangue}}</small> 
+                                        
+                                        <a class="label label-danger addlangue">
+                                            <span class="glyphicon glyphicon-plus" style="color:#fff;"> </span>
+                                        </a>
+                                        
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                        
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
+                                       
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div class="thelangue">
+                                   
                                         {% if countlangue == 0 %}
                                          <form method="POST" action="/profilangue/{{currentuser.user.id}}/">
                                          {% csrf_token %}
@@ -533,8 +597,25 @@
                                               <button class="btn btn-primary"> enregistrer </button>
                                                <button class="btn btn-default rollbacklangue"> annuler </button>
                                           </form>
+                                         {% elif countlangue != 0 %} 
+                                             <form method="POST" action="/profilangue/{{currentuser.user.id}}/" class="newlangue" style="display:none;">
+                                             {% csrf_token %}
+                                                  <input type="text" placeholder="nom de la langue" class="form-control" name="nom" required>
+                                                  <br>
+                                                  <select type="text" class="form-control" name="niveau" required>
+                                                    <option></option>
+                                                    <option>debutant</option>
+                                                    <option>intermédiaire</option>
+                                                    <option>Courant</option>
+                                                    <option>professionnel</option>
+                                                  </select>
+                                                   <br>
+                                                  <button class="btn btn-primary"> enregistrer </button>
+                                                   <button class="btn btn-default rollbacklangue"> annuler </button>
+                                              </form>                                         
                                          {% endif %} 
-                                         
+                                          
+                                         <div class="thelangue">
                                          {% for langue in langueuser%}
                                             <span class="pull-right competencetool"> 
                                                  <a class="glyphicon glyphicon-edit modiflangue" langueid="{{langue.id}}" style="color:rgba(200, 200, 200, 1);" >
@@ -589,17 +670,19 @@
                                     <h5>Vos loisirs</h5> 
                                     <div class="ibox-tools">
                                         <small class="label label-info">{{countloisir}}</small> 
+                                       
+                                        <a class="label label-danger addloisir">
+                                            <span class="glyphicon glyphicon-plus" style="color:#fff;"> </span>
+                                        </a>
+                                       
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                        
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div class="theloisir">
+                                  
                                         {% if countloisir == 0 %}
                                          <form method="POST" action="/profiloisir/{{currentuser.user.id}}/">
                                          {% csrf_token %}
@@ -610,7 +693,19 @@
                                               <button class="btn btn-primary"> enregistrer </button>
                                               <button class="btn btn-default rollbackloisir "> annuler </button>
                                          </form>
-                                        {% endif %} 
+                                        {% elif countloisir != 0 %}
+                                            <form method="POST" action="/profiloisir/{{currentuser.user.id}}/" class="newloisir" style="display:none;">
+                                             {% csrf_token %}
+                                              <input type="text" placeholder="vos loisirs" class="form-control" name="nom" required>
+                                              <br>
+                                              <textarea placeholder="description" class="form-control" name="description"></textarea>
+                                              <br>
+                                              <button class="btn btn-primary"> enregistrer </button>
+                                              <button class="btn btn-default rollbackloisir "> annuler </button>
+                                            </form>                                        
+                                        {% endif %}
+                                      
+                                       <div class="theloisir">  
                                          {% for loisir in loisiruser %}
                                             <span class="pull-right competencetool"> 
                                                  <a class="glyphicon glyphicon-edit modifloisir" loisirid="{{loisir.id}}" style="color:rgba(200, 200, 200, 1);" >
