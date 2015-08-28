@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+         
+{% block body %}
+
+<div class="row">
+
+{% for expert in human %}
+<div class="col-sm-4" style="padding:1%;">
+<a href="/detailexpert/{{expert.user.id}}/">
+    <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+        
+        <div class="col-sm-3" style="padding-left:0px;">
+            <img src="http://placehold.it/50x50"><br>
+
+            <span>
+                {{expert.user.username}} 
+            </span>
+        </div>
+
+        <div class="col-sm-9">
+            <span>{{expert.civilite}} {{expert.nom}} {{expert.prenom}}</span> <br>
+             <span>{{expert.niveauetude}}</span> <br>
+            <span>  <i class="fa fa-envelope"></i> {{expert.user.email}} <br>
+                    <i class="fa fa-phone"></i> {{expert.telephone}} <br>
+                    <i class="fa fa-map-marker"></i> {{expert.adresse}}<br>
+                    {{expert.ville}} 
+            </span>
+        </div>
+        
+        <div class="col-sm-12">
+         <small> {{expert.signature}} </small> 
+        </div>
+        
+    </div>
+</a>    
+</div>
+{% endfor %}
+                
+</div>
+            
+{% endblock %}
+
+
+
+
+                
+

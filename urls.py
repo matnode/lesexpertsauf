@@ -11,6 +11,7 @@ urlpatterns = patterns('experts.views',
     (r'^inscription/$', 'inscription'),
     (r'^acceuil/$', 'acceuil'),
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
+    (r'^profilinfo/(?P<user_id>\d+)/$', 'profilinfo'),
     (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
     (r'^profilcompetence/(?P<user_id>\d+)/$', 'profilcompetence'),
     (r'^modprofilcompetence/(?P<user_id>\d+)/$', 'modprofilcompetence'),
@@ -27,5 +28,8 @@ urlpatterns = patterns('experts.views',
     (r'^profiloisir/(?P<user_id>\d+)/$', 'profiloisir'),
     (r'^modprofiloisir/(?P<user_id>\d+)/$', 'modprofiloisir'),
     (r'^delprofiloisir/(?P<user_id>\d+)/$', 'delprofiloisir'),
-    
+    #listing des experts 
+    (r'^listexperts/$','lesexperts'),
+    (r'^voirlesexperts/$','voirlesexperts'),
+    (r'^detailexpert/(?P<user_id>\d+)/$','detailexpert'),
 )

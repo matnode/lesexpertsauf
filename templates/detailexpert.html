@@ -1,0 +1,338 @@
+{% extends "layout.html" %}
+
+ {% block css %}
+ {{ block.super }}
+ {% load staticfiles %} 
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+ {% endblock %}
+          
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+                     <div class="col-sm-12"><h3>Renseigner les informations concernant votre profil {{currentuser.user.username}}</h3>  </div>
+                    <div class="col-sm-2">                        
+                       
+                        <ul class="list-group clear-list m-t">
+                            <li class="list-group-item fist-item">
+                                
+                                 <img src="http://placehold.it/150x150">
+                              
+                            </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="col-sm-5">
+                       <div class="statistic-box">
+                        <h4>
+                            {% if cetexpert.human.nom == '' %}
+                                    {{cetexpert.user}} n'a pas encore completé son profil
+                            {% else %}
+                           Je suis 
+                             <span class="update_animwhoiam">
+                                   {{cetexpert.human.civilite}} 
+                                   {{cetexpert.human.nom}}
+                                   {{cetexpert.human.prenom}}                                    
+                            </span>
+                            {% endif %}
+                        </h4>
+                        
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                  
+                                       <div style="text-align:left;" class="update_animwhoiam"> 
+                                        Mon anniversaire sera le:  {{cetexpert.human.datenaissance}} <br>  <br>
+                                        Mon mémo: <span class="label label-primary">{{cetexpert.human.signature}}</span>
+                                       </div> 
+                                   
+                                </div>
+                            </div>
+                       
+
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="statistic-box">
+                        <h4>
+                          
+                                Mes coordonnees 
+                           
+                        </h4>
+                       
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                 {% if currentuser.user.human.telephone == 0 %}
+                                   {{cetexpert.username}} n'a pas encore fournis ces coordonnées
+                                 {% else %}
+                                   <div style="text-align:left;" class="update_mycords">
+                                        
+                                         <span>                                           
+                                            <i class="fa fa-globe" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%; font-weight: 600;">Site web:</span> 
+                                            <a href="{{currentuser.user.human.siteweb}}" target="_blank">
+                                                {{cetexpert.human.siteweb}}
+                                            </a>
+                                          </span> <br>
+                                          
+                                          <span> 
+                                            <i class="fa fa-phone" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%;font-weight: 600;">Telephone:</span>
+                                              {{cetexpert.human.telephone}} 
+                                          </span> <br>
+                                          
+                                          <span>
+                                             <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
+                                             <span style="padding:1%; font-weight: 600;"> Mon adresse:</span> 
+                                              {{cetexpert.human.adresse}}/ {{cetexpert.human.ville}}
+                                          </span> <br>
+                                          
+                                          <span> 
+                                              <i class="fa fa-map-signs" style="color:#1AB394;"> </i> 
+                                              <span style="padding:1%; font-weight: 600;" >Ma boite postale:</span> 
+                                               {{cetexpert.human.codepostale}} 
+                                          </span>
+                                          
+                                    </div>
+                                                             
+                                 {% endif %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+            </div>
+            
+          <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content">
+                        <div class="row">
+			
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5> Vos compétences   </h5> 
+                                    <div class="ibox-tools">
+                                        
+                                        <small class="label label-info">{{countcompetence}}</small> 
+                                      
+                                       
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                  <div>
+                                  
+                                                                
+                                   <div style="height:275px;overflow:auto;">
+                                   
+                                        {% for competence in competenceuser %}
+                                          <div class="thecompetence" style="margin-top:2%; padding:2%; border-bottom:1px solid rgba(200, 200, 200, 0.36);">
+                                            <span class="label label-primary nomcompetence{{competence.id}}"> {{competence.nom}} </span>
+                                             
+                                            <br>
+                                            <span class="descripcompetence{{competence.id}}"> {{competence.description}} </span>
+                                           
+                                          </div>
+                                         {% empty %}
+                                          <small>Aucun compétence renseigné pour l'instant</small>
+                                         
+                                        {% endfor %}
+                                    
+                                  </div> 
+                                                                       
+                                  </div>
+                               </div>
+                             </div>
+                           </div>
+                           
+			   
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Missions effectuées</h5> 
+                                    <div class="ibox-tools">
+                                        
+                                         <small class="label label-info">{{countmission}}</small> 
+                                                                                                                     
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                     <div>
+                                     
+                                       
+                                         {% for mission in missionuser %}
+                                            <div style="margin-top:2%;" class="themission">
+                                              <span class=" titre{{mission.id}}" style="font-weight:600; font-size:16px;">{{mission.titre}}</span><br>
+                                             
+                                                du <span class="label datedebut{{mission.id}}">{{mission.datedebut}}</span>
+                                                   
+                                                au <span class="label datefin{{mission.id}}">{{mission.datefin}}</span>
+                                                   <br><br>
+                                                   
+                                              <span style="padding:1%; font-weight:600;">Entreprise:</span> 
+                                                <span class=entreprise{{mission.id}}> {{mission.entreprise}}</span> <br>
+                                             
+                                              <span style="padding:1%; font-weight:600;">Votre fonction:</span>
+                                                <span class="fonction{{mission.id}}">{{mission.fonction}}</span> <br>
+                                              
+                                              <span style="padding:1%; font-weight:600;">
+                                                Compétence utilisées:
+                                              </span>                                              
+                                              <span class="competence{{mission.id}}">{{mission.competenceutilisee}}</span>
+                                              <br>
+                                              
+                                              <span style="padding:1%; font-weight:600;">                                               
+                                                 Description de la mission:
+                                              </span>
+                                              <span class="description{{mission.id}}">{{mission.description}}</span>                                              
+                                              <br>
+                                              
+                                            </div>
+                                         {% empty %}
+                                          <small>Aucune mission renseigné pour l'instant</small>                                         
+                                        {% endfor %}
+                                                                                  
+                                      </div>
+                               </div>
+                            </div>
+                        </div>
+                          
+			  
+			
+			</div>
+			
+			     <div class="row">
+			
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Formations</h5> 
+                                    <div class="ibox-tools">
+                                        <small class="label label-info">{{countformation}}</small> 
+                                       
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                      
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                                                       
+                                      <div class="theformation">                                       
+                                        {% for formation in formationuser %}
+                                            <div style="margin-top:2%;" class="theformation">
+                                              <span style="font-weight:600; font-size:16px;" class="formationtitre{{formation.id}}">{{formation.intitule}}</span><br>
+                                                                                             
+                                                du <span class="label lable-primary formationdatedebut{{formation.id}}">{{formation.datedebut}}</span>
+                                                au <span class="label lable-primary formationdatefin{{formation.id}}">{{formation.datefin}}</span><br><br>
+                                               
+                                                  <span style="padding:1%; font-weight: 600;">Diplome obtenu:</span> 
+                                                  <span class="formationdiplome{{formation.id}}">{{formation.diplome}}</span> <br>
+                                                  
+                                                  <span style="padding:1%; font-weight: 600;">Ecole:</span> 
+                                                  <span class="formationecole{{formation.id}}">{{formation.ecole}}</span> <br>
+                                                  
+                                                  <span style="padding:1%; font-weight: 600;">Lieu:</span>
+                                                  <span class="formationlieu{{formation.id}}">{{formation.lieu}}</span> <br>
+                                                  
+                                                 <span style="padding:1%; font-weight: 600;">Description de la formation:</span>
+                                                  <span class="formationdescription{{formation.id}}">{{formation.description}}</span> <br>
+                                              
+                                            </div>
+                                         {% empty %}
+                                          <small>Aucune formation renseignée pour l'instant</small>                                         
+                                        {% endfor %}
+                                        </div> 
+                                 
+                                    </div>
+                                </div>
+                              </div>
+                           
+			   
+                        <div class="col-lg-3">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Langue</h5>
+                                    <div class="ibox-tools">
+                                        <small class="label label-info">{{countlangue}}</small> 
+                                       
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                       
+                                       
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                   
+                                         <div class="thelangue">
+                                         {% for langue in langueuser%}
+                                         
+                                            <span class="nomlangue{{langue.id}}">{{langue.nom}}</span> -
+                                            </span class="niveaulangue{{langue.id}}">{{langue.niveau}}</span>
+                                          {% empty %}
+                                           <small>Aucune langue renseigné jusqu'ici</small>
+                                          {% endfor %}
+                                          </div>
+                                         
+                                </div>
+                           </div>
+                       </div>
+                          
+			  
+			
+			
+			<div class="col-lg-3">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Vos loisirs</h5> 
+                                    <div class="ibox-tools">
+                                        <small class="label label-info">{{countloisir}}</small> 
+                                                                                                                     
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                       
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                                                     
+                                       <div class="theloisir">  
+                                         {% for loisir in loisiruser %}
+                                                                                      
+                                            <span class="nomloisir{{loisir.id}}">{{loisir.titre}}</span> <br>
+                                            <span class="descriptionloisir{{loisir.id}}">{{loisir.description}}</span>
+                                            
+                                           {%empty%}
+                                          <small> Aucun loisir renseigné jusqu'ici </small>
+                                         {% endfor %}
+                                    </div>
+                                        
+                                        
+                                </div>
+                             </div>
+                          </div>
+                          
+                          			
+			</div>	
+                        </div>
+                     </div>
+                </div>
+{% endblock %}
+
+ {% block js %}
+ {{block.super}}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
+    <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
+    <script src="{% static 'js/animateform.js' %}"></script> 
+    <script src="{% static 'js/calendarform.js' %}"></script> 
+    <script src="{% static 'js/modcompetence.js' %}"></script> 
+ {% endblock %}
+

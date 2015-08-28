@@ -9,6 +9,7 @@
             <link rel="stylesheet" type="text/css" href="{% static 'css/perso.css' %}" />
             <link rel="stylesheet" type="text/css" href="{% static 'css/loading-bar.css' %}" />
             <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}" />
+            
           {% endblock %}
       
      
@@ -67,7 +68,7 @@
                     </li>                    
                             
                     <li class="special_link">
-                        <a href="widgets.html"><i class="fa fa-group"></i> <span class="nav-label">Les experts</span></a>
+                        <a href="/listexperts/"><i class="fa fa-group"></i> <span class="nav-label">Les experts</span></a>
                     </li>
                 </ul>
 
@@ -79,9 +80,9 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
+            <form role="search" class="navbar-form-custom" action="/voirlesexperts/" method="POST">{% csrf_token %}
                 <div class="form-group">
-                    <input placeholder="recherchez un expert" class="form-control" name="top-search" id="top-search" type="text">
+                    <input placeholder="recherchez un expert" class="form-control" name="username" id="top-search" type="text">
                 </div>
             </form>
         </div>
@@ -213,7 +214,7 @@
         {% block js %}
           <script src="{% static 'js/jquery.min.js' %}"></script>
           <script src="{% static 'js/bootstrap.min.js' %}"></script>
-          <script src="{% static 'js/angular.min.js' %}"></script>
+        
           <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.min.js"></script> 
           <script src="{% static 'js/loading-bar.js' %}"></script>
           <script src="{% static 'js/app.js' %}"></script>

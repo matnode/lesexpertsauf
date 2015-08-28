@@ -43,7 +43,7 @@
                             <div class="row text-center">
                                 <div class="col-lg-12">
                                     {% if currentuser.user.human.nom == '' %}
-                                    <form method="post" action="/profil/{{currentuser.user.id}}/">
+                                    <form method="post" action="/profilinfo/{{currentuser.user.id}}/">
                                         {% csrf_token %}
                                           <select id="civilite" name="civilite" class="form-control" required>
                                                <option value=""> votre civilite</option>
