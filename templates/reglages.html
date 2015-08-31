@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+
+                    <div class="col-sm-6">
+                        <h3>modifier le mot de passe</h3>
+                        <small>{{message}}</small>
+                        
+                        <form method="post" action="/motdepasse/">
+                           {% csrf_token %}
+                            <input type="text" name="password" class="form-control" placeholder="nouveau mot de passe" required >
+                            <br>
+                            <input type="text" name="confpassword" class="form-control"  placeholder="confirmer votre mot de passe" required>
+                            
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+                        </form>
+                        
+                    </div>
+                   
+                    <div class="col-sm-6">
+                     
+                        <h3>
+                            modifier votre nom d'utilisateur
+                        </h3>
+                       
+                           
+                            <form method="post" action="/reglages/">
+                                {% csrf_token %}                               
+                                <input type="text" name="username" class="form-control" value="{{currentuser.user.username}}" required> 
+                                
+                                <button class="btn btn-primary"> valider </button>
+                                
+                                 <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                       
+                  
+
+            </div>
+            
+{% endblock %}
+

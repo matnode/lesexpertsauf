@@ -469,3 +469,39 @@ def detailexpert(request,user_id):
 	'countlangue':countlangue,
 	'loisiruser':loisiruser,
 	'countloisir':countloisir}, context_instance=RequestContext(request))
+	
+def reglages(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	user= User.objects.get(pk=currentuser.user.id)
+	message=""
+	
+        if request.method== 'POST':             
+            if request.POST['username']:       
+                user.username = request.POST['username']
+                message="votre nom d'utilisateur a été mis à jour"                                           
+                user.save()
+                return HttpResponseRedirect(reverse('experts.views.reglages'))
+	return render_to_response("../templates/reglages.html",
+	{'currentuser':currentuser,
+	'message':message}, 
+	 context_instance=RequestContext(request))
+
+def motdepasse(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	user= User.objects.get(username__exact=currentuser.user.username)
+	message=""
+        if request.method== 'POST':             
+            if request.POST['password'] != request.POST['confpassword']:
+                message="les mots de passe ne correspondes pas"
+            else:
+                user.set_password(request.POST['password'])
+                message="mot de passe modifié avec succès"
+                user.save()
+	return render_to_response("../templates/reglages.html",
+	{'currentuser':currentuser,
+	 'message':message
+	}, context_instance=RequestContext(request))
