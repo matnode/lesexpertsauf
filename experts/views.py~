@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from experts.models import Human, Competence, Mission, Formation, Langue, Loisir
+from experts.models import Human, Competence, Mission, Formation, Langue, Loisir, Typecompte, Entreprise
 from django.utils import timezone
 from django.core import serializers
 import random, sha, string
@@ -26,7 +26,7 @@ def index(request):
         if user is not None:
             if user.is_active:
                   login(request, user)
-                  return HttpResponseRedirect(reverse('experts.views.acceuil'))
+                  return HttpResponseRedirect(reverse('experts.views.routeur'))
             else:
                   message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> Votre comte a été desactivé </div>'
         else:
@@ -38,7 +38,15 @@ def deconnexion(request):
 	logout(request)
 	return HttpResponseRedirect(reverse(index))
 
-
+def routeur(request):	
+	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
+    currentuser = request
+   
+    if currentuser.user.typecompte.typedecompte == "Expert":
+        return HttpResponseRedirect(reverse(index))
+    else:
+	    return HttpResponseRedirect(reverse(profilentreprise))
+    return render_to_response("../templates/inscription.html", context_instance=RequestContext(request))
 
 def inscription(request):	
 	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
@@ -47,22 +55,42 @@ def inscription(request):
             user = User.objects.create_user(
                     username = request.POST['username'],
                     email = request.POST['email'],
-                   password = request.POST['password'],
+                    password = request.POST['password'],
                  ) 
-                                
-            human = Human(
-                  user= user,
-                  datecreation = timezone.now(),
-                  #par defaut on initialise certain champ qui ne peuvent pas avoir une valeur null
-                  online=0,
-                  telephone=0,
-                  datenaissance=" ",
                   
-           )
-                	
-            human.save()
-            	
+            if request.POST['profil'] =="Expert":              
+                 human = Human(
+                          user= user,
+                          datecreation = timezone.now(),
+                          #par defaut on initialise certain champ qui ne peuvent pas avoir une valeur null
+                          online=0,
+                          telephone=0,
+                          datenaissance=" ",    
+                    )
+                 human.save()
+                 
+                 typedecompte = Typecompte (
+                    user = user,
+                    typedecompte = request.POST['profil'],
+                 )
+                 typedecompte.save()  
+                   
+            else:
+            #on initialise juste on le remplira plustard
+                entreprise = Entreprise(
+                        user = user,
+                        telephone = 0,
+                )
+                entreprise.save()
+                
+                typedecompte = Typecompte (
+                    user = user,
+                    typedecompte = request.POST['profil'],
+               )
+                typedecompte.save()          
             return HttpResponseRedirect(reverse(index))
+           
+            
 	return render_to_response("../templates/inscription.html", context_instance=RequestContext(request))
 	
 def acceuil(request):	
@@ -482,7 +510,7 @@ def reglages(request):
                 user.username = request.POST['username']
                 message="votre nom d'utilisateur a été mis à jour"                                           
                 user.save()
-               return HttpResponseRedirect(reverse('experts.views.reglages'))
+                return HttpResponseRedirect(reverse('experts.views.reglages'))
 	return render_to_response("../templates/reglages.html",
 	{'currentuser':currentuser,
 	'message':message}, 
@@ -505,3 +533,58 @@ def motdepasse(request):
 	{'currentuser':currentuser,
 	 'message':message
 	}, context_instance=RequestContext(request))
+
+def profilentreprise(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	user= User.objects.get(pk=currentuser.user.id)
+	
+
+	return render_to_response("../templates/profilentreprise.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+
+def profilentrepriseinfo(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	user= User.objects.get(pk=currentuser.user.id)
+	
+	
+        if request.method== 'POST':             
+            if request.POST['nom']: 
+                 entreprise = Entreprise(
+                   user=user,                  
+                   nom = request.POST['nom'],
+                   datedefondation = request.POST['datefondation'],
+                   taille = request.POST['taillentreprise'],             
+                )
+                 entreprise.save()
+                 
+                 
+	return render_to_response("../templates/profilentreprise.html",
+	{'currentuser':currentuser}, 
+	 context_instance=RequestContext(request))
+	 
+def profilentreprisecoord(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	user= User.objects.get(pk=currentuser.user.id)
+	
+	
+        if request.method== 'POST':             
+            if request.POST['telephone']: 
+                 entreprise = Entreprise(
+                   user=user,                  
+                   telephone = request.POST['telephone'],
+                   siteweb = request.POST['siteweb'],
+                   codepostale = request.POST['codepostale'],
+                   datedefondation = request.POST['datefondation'],
+                   ville = request.POST['ville'],             
+                )
+                 entreprise.save()
+                 
+                 
+	return render_to_response("../templates/profilentreprise.html",
+	{'currentuser':currentuser}, 
+	 context_instance=RequestContext(request))

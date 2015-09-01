@@ -9,9 +9,9 @@
                         
                         <form method="post" action="/motdepasse/">
                            {% csrf_token %}
-                            <input type="text" name="password" class="form-control" placeholder="nouveau mot de passe" required >
+                            <input type="password" name="password" class="form-control" placeholder="nouveau mot de passe" required >
                             <br>
-                            <input type="text" name="confpassword" class="form-control"  placeholder="confirmer votre mot de passe" required>
+                            <input type="password" name="confpassword" class="form-control"  placeholder="confirmer votre mot de passe" required>
                             
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>

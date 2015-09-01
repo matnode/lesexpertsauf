@@ -28,10 +28,13 @@ urlpatterns = patterns('experts.views',
     (r'^profiloisir/(?P<user_id>\d+)/$', 'profiloisir'),
     (r'^modprofiloisir/(?P<user_id>\d+)/$', 'modprofiloisir'),
     (r'^delprofiloisir/(?P<user_id>\d+)/$', 'delprofiloisir'),
-    (r'^reglages/$', 'reglage'),
+    (r'^reglages/$', 'reglages'),
     (r'^motdepasse/$', 'motdepasse'),
     #listing des experts 
     (r'^listexperts/$','lesexperts'),
     (r'^voirlesexperts/$','voirlesexperts'),
     (r'^detailexpert/(?P<user_id>\d+)/$','detailexpert'),
+    #entreprise
+    (r'^profilentreprise/$', 'profilentreprise'),
+    (r'^profilentrepriseinfo/$', 'profilentrepriseinfo'),
 )

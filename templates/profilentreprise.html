@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+ {% block css %}
+ {{ block.super }}
+ {% load staticfiles %} 
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+ {% endblock %}
+
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+
+                    <div class="col-sm-6">
+                        <h3>Les informations sur votre entreprise</h3>
+                        <small>{{message}}</small>
+                        
+                        <form method="post" action="/profilentrepriseinfo/">
+                           {% csrf_token %}
+                            <input type="text" name="nom" class="form-control" placeholder="Nom de l'entreprise" required >
+                            
+                            <br>
+                            <input type="text" name="datefondation" class="form-control dp1" placeholder="date de fondation de votre entreprise" required> 
+                           
+                            <label> Taille de l'entreprise </label>
+                            <input type="text" name="taillentreprise" class="form-control" placeholder="10-20" required> 
+                            <br>
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+                        </form>
+                        
+                    </div>
+                   
+                    <div class="col-sm-6">
+                     
+                        <h3>
+                            Les coordonnées de votre entreprise
+                        </h3>
+                       
+                           
+                            <form method="post" action="/reglages/">
+                                {% csrf_token %}                               
+                                <input type="text" name="telephone" class="form-control" placeholder="Telephone" required> 
+                                <br>
+                                  <input type="text" name="siteweb" class="form-control" placeholder="votre site web" required> 
+                                 <br>
+                                 <input type="text" name="codepostale" class="form-control" placeholder="votre code postale" required> 
+                                 <br>
+                                 <input type="text" name="ville" class="form-control" placeholder="ville" required> 
+                                 <br>
+                                <button class="btn btn-primary"> valider </button>
+                                
+                                 <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                       
+                  
+
+            </div>
+            
+            
+</div>
+
+<div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
+
+          <div class="col-sm-12">
+               <h3>Les secteurs d'activités de votre entreprise</h3>
+               <small>{{message}}</small>
+                        
+              <form method="post" action="/motdepasse/">
+              {% csrf_token %}
+              <textarea class="form-control" placeholder="maximum 400 mots" name="activite" required ></textarea>                   
+                            <br>
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+              </form>
+                        
+             
+                       
+            </div>
+            
+            
+</div>      
+
+<div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
+
+          <div class="col-sm-12">
+               <h3>parlez-nous de votre entreprise</h3>
+               <small>{{message}}</small>
+                        
+              <form method="post" action="/motdepasse/">
+              {% csrf_token %}
+              <textarea class="form-control" placeholder="maximum 400 mots" name="description" required ></textarea>                   
+                            <br>
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+              </form>
+                        
+             
+                       
+            </div>
+            
+            
+</div>         
+            
+{% endblock %}
+
+ {% block js %}
+ {{block.super}}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
+    <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
+    <script src="{% static 'js/calendarform.js' %}"></script> 
+ {% endblock %}
+
