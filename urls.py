@@ -36,6 +36,11 @@ urlpatterns = patterns('experts.views',
     (r'^voirlesexperts/$','voirlesexperts'),
     (r'^detailexpert/(?P<user_id>\d+)/$','detailexpert'),
     #entreprise
+    (r'^listentreprise/$', 'listentreprise'),
+    (r'^detailentreprise/(?P<user_id>\d+)/$','detailentreprise'),
     (r'^profilentreprise/$', 'profilentreprise'),
     (r'^profilentrepriseinfo/$', 'profilentrepriseinfo'),
+    (r'^profilentreprisecoord/$', 'profilentreprisecoord'),
+    (r'^profilentreprisedescription/$', 'profilentreprisedescription'),
+    (r'^profilentrepriseactivite/$', 'profilentrepriseactivite'),
 )

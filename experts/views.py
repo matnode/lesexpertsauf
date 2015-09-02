@@ -79,13 +79,15 @@ def inscription(request):
             #on initialise juste on le remplira plustard
                 entreprise = Entreprise(
                         user = user,
-                        telephone = 0,
+                        telephone=0,
+                        ville="",
                 )
                 entreprise.save()
                 
                 typedecompte = Typecompte (
                     user = user,
                     typedecompte = request.POST['profil'],
+                  
                )
                 typedecompte.save()          
             return HttpResponseRedirect(reverse(index))
@@ -448,18 +450,12 @@ def voirlesexperts(request):
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
 	if request.method== 'POST':
+	    typedecompte=request.POST['typedecompte']
 	    cesexperts = User.objects.filter(username__contains=request.POST['username'])
 	
-	return render_to_response("../templates/searchexpert.html",{'currentuser':currentuser,'cesexperts':cesexperts}, context_instance=RequestContext(request))
+	return render_to_response("../templates/searchexpert.html",{'currentuser':currentuser,'typedecompte':typedecompte,'cesexperts':cesexperts}, context_instance=RequestContext(request))
 	
-def voirlesexperts(request):	
-	# on est sur la page de profil
-	# on recucupère les identifiants de l'utilisateurs courant
-	currentuser =request
-	if request.method== 'POST':
-	    cesexperts = User.objects.filter(username__contains=request.POST['username'])
-	
-	return render_to_response("../templates/searchexpert.html",{'currentuser':currentuser,'cesexperts':cesexperts}, context_instance=RequestContext(request))
+
 
 def detailexpert(request,user_id):	
 	# on est sur la page de profil
@@ -547,19 +543,51 @@ def profilentrepriseinfo(request):
 	# on est sur la page de reglage
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
-	user= User.objects.get(pk=currentuser.user.id)
+	entreprise= Entreprise.objects.get(pk=currentuser.user.entreprise.id)
 	
 	
         if request.method== 'POST':             
             if request.POST['nom']: 
-                 entreprise = Entreprise(
-                   user=user,                  
-                   nom = request.POST['nom'],
-                   datedefondation = request.POST['datefondation'],
-                   taille = request.POST['taillentreprise'],             
-                )
-                 entreprise.save()
+                                
+                   entreprise.nom = request.POST['nom']
+                   entreprise.datedefondation = request.POST['datefondation']
+                   entreprise.taille = request.POST['taillentreprise']  
+                   entreprise.save()
+                   return HttpResponseRedirect(reverse('experts.views.profilentreprise'))
                  
+	return render_to_response("../templates/profilentreprise.html",
+	{'currentuser':currentuser}, 
+	 context_instance=RequestContext(request))
+
+def profilentrepriseactivite(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	entreprise= Entreprise.objects.get(pk=currentuser.user.entreprise.id)
+	
+	
+        if request.method== 'POST':             
+            if request.POST['activite']:
+                   entreprise.activite = request.POST['activite']           
+                   entreprise.save()
+                   return HttpResponseRedirect(reverse('experts.views.profilentreprise'))
+                 
+	return render_to_response("../templates/profilentreprise.html",
+	{'currentuser':currentuser}, 
+	 context_instance=RequestContext(request))
+
+def profilentreprisedescription(request):	
+	# on est sur la page de reglage
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	entreprise= Entreprise.objects.get(pk=currentuser.user.entreprise.id)
+	
+	
+        if request.method== 'POST':
+            if request.POST['description']:
+                   entreprise.description = request.POST['description']
+                   entreprise.save()
+                   return HttpResponseRedirect(reverse('experts.views.profilentreprise'))
                  
 	return render_to_response("../templates/profilentreprise.html",
 	{'currentuser':currentuser}, 
@@ -569,22 +597,36 @@ def profilentreprisecoord(request):
 	# on est sur la page de reglage
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
-	user= User.objects.get(pk=currentuser.user.id)
+	entreprise= Entreprise.objects.get(pk=currentuser.user.entreprise.id)
 	
 	
         if request.method== 'POST':             
             if request.POST['telephone']: 
-                 entreprise = Entreprise(
-                   user=user,                  
-                   telephone = request.POST['telephone'],
-                   siteweb = request.POST['siteweb'],
-                   codepostale = request.POST['codepostale'],
-                   datedefondation = request.POST['datefondation'],
-                   ville = request.POST['ville'],             
-                )
-                 entreprise.save()
-                 
+                            
+                    entreprise.telephone = request.POST['telephone']
+                    entreprise.siteweb = request.POST['siteweb']
+                    entreprise.codepostale = request.POST['codepostale']
+                    entreprise.ville = request.POST['ville'] 
+                    entreprise.adresse = request.POST['adresse']                  
+                    entreprise.save()
+                    return HttpResponseRedirect(reverse('experts.views.profilentreprise'))
                  
 	return render_to_response("../templates/profilentreprise.html",
 	{'currentuser':currentuser}, 
 	 context_instance=RequestContext(request))
+
+def listentreprise(request):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	lesentreprises = Entreprise.objects.all()
+	
+	return render_to_response("../templates/listentreprise.html",{'currentuser':currentuser,'lesentreprises': lesentreprises}, context_instance=RequestContext(request))
+	
+def detailentreprise(request,user_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	entreprise = Entreprise.objects.get(pk=user_id)
+	
+	return render_to_response("../templates/detailentreprise.html",{'currentuser':currentuser,'entreprise': entreprise}, context_instance=RequestContext(request))

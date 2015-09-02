@@ -10,93 +10,200 @@
 <div class="row  border-bottom white-bg dashboard-header">
 
                     <div class="col-sm-6">
-                        <h3>Les informations sur votre entreprise</h3>
+                        <h3>Les informations sur votre entreprise 
+                                    <a href="#" style="font-size:10px;" class="update_whoiam"> 
+                                     <i class="fa fa-pencil"> </i>mettre à jour 
+                                    </a> 
+                        </h3>
                         <small>{{message}}</small>
                         
-                        <form method="post" action="/profilentrepriseinfo/">
-                           {% csrf_token %}
-                            <input type="text" name="nom" class="form-control" placeholder="Nom de l'entreprise" required >
-                            
-                            <br>
-                            <input type="text" name="datefondation" class="form-control dp1" placeholder="date de fondation de votre entreprise" required> 
-                           
-                            <label> Taille de l'entreprise </label>
-                            <input type="text" name="taillentreprise" class="form-control" placeholder="10-20" required> 
-                            <br>
-                            <button class="btn btn-primary"> valider </button>
-                            <button class="btn btn-default" type="reset"> annuler </button>
-                        </form>
+                        {% if currentuser.user.entreprise.nom == '' %}
+                            <form method="post" action="/profilentrepriseinfo/">
+                               {% csrf_token %}
+                                <input type="text" name="nom" class="form-control" placeholder="Nom de l'entreprise" required >
+                                
+                                <br>
+                                <input type="text" name="datefondation" class="form-control dp1" placeholder="date de fondation de votre entreprise" required> 
+                               
+                                <label> Taille de l'entreprise </label>
+                                <input type="text" name="taillentreprise" class="form-control" placeholder="10-20" required> 
+                                <br>
+                                <button class="btn btn-primary"> valider </button>
+                                <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                        {% else %}
                         
+                         <div style="text-align:left;" class="update_animwhoiam"> 
+                              Nom de l'entreprise:  {{currentuser.user.entreprise.nom}} <br> <br> 
+                              fondé en: <span class="label label-default">{{currentuser.user.entreprise.datedefondation}}</span><br><br>
+                              Taille de l'entreprise: <span class="label label-primary">{{currentuser.user.entreprise.taille}}</span>
+                         </div>
+                         
+                            <form method="post" class="modwhoiam animated fadeInRight" style="display:none;" action="/profilentrepriseinfo/">
+                               {% csrf_token %}
+                               <label> Nom de l'entreprise </label>
+                                <input type="text" name="nom" value=" {{currentuser.user.entreprise.nom}}" class="form-control" placeholder="Nom de l'entreprise" required >
+                                
+                               
+                                <label> Date de fondation </label>
+                                <input type="text" value=" {{currentuser.user.entreprise.datedefondation}}" name="datefondation" class="form-control dp1" placeholder="date de fondation de votre entreprise" required> 
+                               
+                                <label> Taille de l'entreprise </label>
+                                <input type="text" value=" {{currentuser.user.entreprise.taille}}" name="taillentreprise" class="form-control" placeholder="10-20" required> 
+                                <br>
+                                <button class="btn btn-primary"> valider </button>
+                                <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                         {% endif %} 
                     </div>
                    
                     <div class="col-sm-6">
                      
                         <h3>
                             Les coordonnées de votre entreprise
+                           
+                            {% if currentuser.user.entreprise.telephone != 0 %}   
+                                <a href="#" style="font-size:10px;" class="update_mycords"> 
+                                    <i class="fa fa-pencil"> </i>mettre à jour
+                                </a>
+                            {%endif%}
                         </h3>
                        
-                           
-                            <form method="post" action="/reglages/">
+                           {% if currentuser.user.entreprise.ville == "" %}
+                            <form method="post" action="/profilentreprisecoord/">
                                 {% csrf_token %}                               
                                 <input type="text" name="telephone" class="form-control" placeholder="Telephone" required> 
                                 <br>
-                                  <input type="text" name="siteweb" class="form-control" placeholder="votre site web" required> 
+                                  <input type="text" name="siteweb" class="form-control" placeholder="votre site web"> 
                                  <br>
                                  <input type="text" name="codepostale" class="form-control" placeholder="votre code postale" required> 
                                  <br>
                                  <input type="text" name="ville" class="form-control" placeholder="ville" required> 
                                  <br>
+                                 <input type="text" name="adresse" class="form-control" placeholder="adresse" required> 
+                                 <br>
+                                <button class="btn btn-primary"> valider </button>
+                                
+                                <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                           {% else %}
+                                <div style="text-align:left;" class="update_mycords">
+                                        
+                                         <span>                                           
+                                            <i class="fa fa-globe" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%; font-weight: 600;">Site web:</span> 
+                                            <a href="{{currentuser.user.human.siteweb}}" target="_blank">
+                                                {{currentuser.user.entreprise.siteweb}}
+                                            </a>
+                                          </span> <br>
+                                          
+                                          <span> 
+                                            <i class="fa fa-phone" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%;font-weight: 600;">Telephone:</span>
+                                              {{currentuser.user.entreprise.telephone}} 
+                                          </span> <br>
+                                          
+                                          <span> 
+                                              <i class="fa fa-map-signs" style="color:#1AB394;"> </i> 
+                                              <span style="padding:1%; font-weight: 600;" >Ma boite postale:</span> 
+                                               {{currentuser.user.entreprise.codepostale}} 
+                                          </span> <br>
+                                            
+                                          <span>
+                                             <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
+                                             <span style="padding:1%; font-weight: 600;"> ville:</span> 
+                                              {{currentuser.user.entreprise.adresse}},  {{currentuser.user.entreprise.ville}}
+                                          </span> <br>
+                                    </div>
+                                    
+                            <form method="post" class="modmycord animated fadeInRight" style="display:none;" action="/profilentreprisecoord/">
+                                {% csrf_token %}                               
+                                <input type="text" name="telephone" class="form-control" value="{{currentuser.user.entreprise.telephone}}" placeholder="Telephone" required> 
+                                <br>
+                                  <input type="text" name="siteweb" class="form-control" value="{{currentuser.user.entreprise.siteweb}}" placeholder="votre site web" required> 
+                                 <br>
+                                 <input type="text" name="codepostale" class="form-control" value="{{currentuser.user.entreprise.codepostale}}" placeholder="votre code postale" required> 
+                                 <br>
+                                 <input type="text" name="ville" class="form-control" value="{{currentuser.user.entreprise.ville}}" placeholder="ville" required> 
+                                 <br>
+                                 <input type="text" name="adresse" class="form-control" value="{{currentuser.user.entreprise.adresse}}" placeholder="adresse" required> 
+                                 <br>
                                 <button class="btn btn-primary"> valider </button>
                                 
                                  <button class="btn btn-default" type="reset"> annuler </button>
                             </form>
+                           {%endif%}
                        
-                  
-
-            </div>
-            
+            </div>            
             
 </div>
 
 <div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
 
           <div class="col-sm-12">
-               <h3>Les secteurs d'activités de votre entreprise</h3>
+               <h3>
+                    Les secteurs d'activités de votre entreprise
+                   {% if currentuser.user.entreprise.activite != "" %} 
+                       <a href="#" style="font-size:10px;" class="updatentactivite"> 
+                             <i class="fa fa-pencil"> </i> mettre à jour
+                       </a>
+                   {% endif %}
+               </h3>
+               
                <small>{{message}}</small>
-                        
-              <form method="post" action="/motdepasse/">
+            {% if currentuser.user.entreprise.activite == "" %} 
+              <form method="post" action="/profilentrepriseactivite/" >
               {% csrf_token %}
               <textarea class="form-control" placeholder="maximum 400 mots" name="activite" required ></textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
-                        
-             
-                       
+            {% else %}
+              <p class="textentactivite">  {{currentuser.user.entreprise.activite}} </p>
+                <form method="post" action="/profilentrepriseactivite/" class="profilentactivite" style="display:none;">
+              {% csrf_token %}
+              <textarea class="form-control" placeholder="maximum 400 mots" name="activite" required >{{currentuser.user.entreprise.activite}}</textarea>                   
+                            <br>
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+              </form>
+            {% endif %}                       
             </div>
-            
             
 </div>      
 
 <div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
 
           <div class="col-sm-12">
-               <h3>parlez-nous de votre entreprise</h3>
+               <h3>
+                    parlez-nous de votre entreprise
+                   {% if currentuser.user.entreprise.description  != "" %} 
+                    <a href="#" style="font-size:10px;" class="updatentdescrip"> 
+                         <i class="fa fa-pencil"> </i> mettre à jour
+                   </a>
+                  {% endif %}
+               </h3>
                <small>{{message}}</small>
-                        
-              <form method="post" action="/motdepasse/">
+              {% if currentuser.user.entreprise.description == "" %}            
+              <form method="post" action="/profilentreprisedescription/">
               {% csrf_token %}
               <textarea class="form-control" placeholder="maximum 400 mots" name="description" required ></textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
-                        
-             
-                       
+              {% else %}
+                  <p class="textentdescrip">  {{currentuser.user.entreprise.description}} </p>
+              <form method="post" action="/profilentreprisedescription/" class="profilentdescrip" style="display:none;" > 
+              {% csrf_token %}
+              <textarea class="form-control" placeholder="maximum 400 mots" name="description" required >{{currentuser.user.entreprise.description}}</textarea>                   
+                            <br>
+                            <button class="btn btn-primary"> valider </button>
+                            <button class="btn btn-default" type="reset"> annuler </button>
+              </form>
+              {% endif %}         
             </div>
-            
             
 </div>         
             
@@ -107,5 +214,22 @@
     <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
     <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
     <script src="{% static 'js/calendarform.js' %}"></script> 
+     <script src="{% static 'js/animateform.js' %}"></script> 
+     <script>
+                 
+        $('.updatentactivite').on('click', function(){
+           
+            $('.textentactivite').hide();
+            $('.profilentactivite').show();
+
+        });        
+        
+        $('.updatentdescrip').on('click', function(){
+           
+            $('.textentdescrip').hide();
+            $('.profilentdescrip').show();
+
+        });
+     </script>
  {% endblock %}
 

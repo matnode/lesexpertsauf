@@ -8,8 +8,7 @@
             <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" />
             <link rel="stylesheet" type="text/css" href="{% static 'css/perso.css' %}" />
             <link rel="stylesheet" type="text/css" href="{% static 'css/loading-bar.css' %}" />
-            <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}" />
-            
+            <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}" />            
           {% endblock %}
       
      
@@ -23,27 +22,40 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg">
+                            <img alt="image" class="img-circle" src="http://placehold.it/50x50">
+                           
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{currentuser.user.username}}</strong>
                              </span> <span class="text-muted text-xs block">{{currentuser.user.human.civilite}} {{currentuser.user.human.nom}} {{currentuser.user.human.prenom}} <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            
+                               {% if currentuser.user.typecompte.typedecompte == "Expert" %}
                                 <li><a href="/profil/{{currentuser.user.id}}/">Profil</a></li>
+                               {% elif currentuser.user.typecompte.typedecompte == "Entreprise"%}
+                                <li><a href="/profilentreprise/">Profil</a></li>
+                               {% endif %}
+                                
                                 <li><a href="/reglages/">Mes reglages</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/deconnexion/">Deconnexion</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
-                            IN+
+                          IFGU
                         </div>
                     </li>
                    
                            
-                    <li>
-                        <a href="/profil/{{currentuser.user.id}}/"><i class="fa fa-user"></i> <span class="nav-label">mon profil</span></a>
+                    <li>                       
+                         {% if currentuser.user.typecompte.typedecompte == "Expert" %}
+                          <a href="/profil/{{currentuser.user.id}}/"><i class="fa fa-user"></i> <span class="nav-label">mon profil</span></a>
+                         {% elif currentuser.user.typecompte.typedecompte == "Entreprise"%}
+                              <a href="/profilentreprise/"><i class="fa fa-user"></i> <span class="nav-label">mon profil</span></a>
+                         {% endif %}
                     </li>
+                    
+                    
                    
                     <li>
                         <a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">offres</span></a>
@@ -63,7 +75,7 @@
                       
                  
                     <li class="special_link">
-                        <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">les établissements</span></a>
+                        <a href="/listentreprise/"><i class="fa fa-database"></i> <span class="nav-label">les établissements</span></a>
                     </li>                    
                             
                     <li class="special_link">
@@ -79,11 +91,15 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            
             <form role="search" class="navbar-form-custom" action="/voirlesexperts/" method="POST">{% csrf_token %}
                 <div class="form-group">
                     <input placeholder="recherchez un expert" class="form-control" name="username" id="top-search" type="text">
+                    <input type="radio" name="typedecompte" value="Expert" required> Expert  
+                    <input type="radio" name="typedecompte" value="Entreprise" required> Entreprise
                 </div>
             </form>
+            
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>

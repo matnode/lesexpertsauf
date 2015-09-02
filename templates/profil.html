@@ -8,20 +8,21 @@
           
 {% block body %}
 <div class="row  border-bottom white-bg dashboard-header">
-                     <div class="col-sm-12"><h3>Renseigner les informations concernant votre profil {{currentuser.user.username}}</h3>  </div>
+                     <div class="col-sm-12">    
+                        <h3>Renseigner les informations concernant votre profil {{currentuser.user.username}}</h3>
+                     </div>
+                     
                     <div class="col-sm-2">                        
                        
                         <ul class="list-group clear-list m-t">
-                            <li class="list-group-item fist-item">
-                                
-                                 <img src="http://placehold.it/150x150">
-                              
+                            <li class="list-group-item fist-item">                                
+                                 <img src="http://placehold.it/150x150">                              
                             </li>
                             <li class="list-group-item">
                                <button class="btn btn-primary full-width"> changer de photo </button>
-                            </li>
-                           
+                            </li>                                                       
                         </ul>
+                        
                     </div>
                     <div class="col-sm-5">
                        <div class="statistic-box">
@@ -35,7 +36,8 @@
                                    {{currentuser.user.human.nom}}
                                    {{currentuser.user.human.prenom}}
                                     <a href="#" style="font-size:10px;" class="update_whoiam"> 
-                                    <i class="fa fa-pencil"> </i>mettre à jour </a> 
+                                     <i class="fa fa-pencil"> </i>mettre à jour 
+                                    </a> 
                             </span>
                             {% endif %}
                         </h4>
@@ -118,6 +120,7 @@
                                     <i class="fa fa-pencil"> </i>mettre à jour
                                 </a>
                               {%endif%}
+                              
                         </h4>
                        
                             <div class="row text-center">

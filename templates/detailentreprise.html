@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+ {% block css %}
+ {{ block.super }}
+ {% load staticfiles %} 
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+ {% endblock %}
+
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+
+                    <div class="col-sm-6">
+                        
+                        <h3>
+                            Les informations sur votre entreprise                                
+                        </h3>
+                                            
+                         <div style="text-align:left;" class="update_animwhoiam"> 
+                              Nom de l'entreprise:  {{entreprise.nom}} <br> <br> 
+                              fondé en: <span class="label label-default">{{entreprise.datedefondation}}</span><br><br>
+                              Taille de l'entreprise: <span class="label label-primary">{{entreprise.taille}}</span>
+                         </div>
+                                                     
+                    </div>
+                   
+                    <div class="col-sm-6">
+                     
+                        <h3>
+                            Les coordonnées de votre entreprise                         
+                        </h3>
+                       
+                              <div style="text-align:left;" class="update_mycords">
+                                        
+                                         <span>                                           
+                                            <i class="fa fa-globe" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%; font-weight: 600;">Site web:</span> 
+                                            <a href="{{currentuser.user.human.siteweb}}" target="_blank">
+                                                {{entreprise.siteweb}}
+                                            </a>
+                                          </span> <br>
+                                          
+                                          <span> 
+                                            <i class="fa fa-phone" style="color:#1AB394;"> </i>
+                                            <span style="padding:1%;font-weight: 600;">Telephone:</span>
+                                              {{entreprise.telephone}} 
+                                          </span> <br>
+                                          
+                                          <span> 
+                                              <i class="fa fa-map-signs" style="color:#1AB394;"> </i> 
+                                              <span style="padding:1%; font-weight: 600;" >Ma boite postale:</span> 
+                                               {{entreprise.codepostale}} 
+                                          </span> <br>
+                                            
+                                          <span>
+                                             <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
+                                             <span style="padding:1%; font-weight: 600;"> ville:</span> 
+                                              {{entreprise.ville}}
+                                          </span> <br>
+                               </div>
+                         
+                     </div>
+            
+            
+</div>
+
+<div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
+
+          <div class="col-sm-12">
+               <h3>
+                    Les secteurs d'activités de votre entreprise                  
+               </h3>
+               
+              <p class="textentactivite">  {{entreprise.activite}} </p>
+                             
+            </div>
+            
+</div>      
+
+<div class="row  border-bottom white-bg dashboard-header" style="margin-top:2%;">
+
+          <div class="col-sm-12">
+               <h3>
+                    parlez-nous de votre entreprise
+                   
+               </h3>
+              
+                  <p class="textentdescrip">  {{entreprise.description}} </p>
+                  
+            </div>
+            
+</div>         
+            
+{% endblock %}
+
+ {% block js %}
+ {{block.super}}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
+    <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
+    <script src="{% static 'js/calendarform.js' %}"></script> 
+     <script src="{% static 'js/animateform.js' %}"></script> 
+ {% endblock %}
+

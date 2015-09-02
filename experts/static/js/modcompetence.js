@@ -270,3 +270,4 @@ $('.deleteloisir').on('click', function(){
    
 });
 
+

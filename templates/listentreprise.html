@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+         
+{% block body %}
+
+<div class="row">
+
+{% for entreprise in lesentreprises %}
+
+{% if entreprise.ville != "" %}
+<div class="col-sm-4" style="padding:1%;">
+<a href="/detailentreprise/{{entreprise.id}}/">
+    <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+        
+        <div class="col-sm-3" style="padding-left:0px;">
+            <img src="http://placehold.it/50x50"><br>
+        </div>
+
+        <div class="col-sm-9">
+            <span> {{entreprise.nom}}</span> <br>
+             
+            <span>  <i class="fa fa-envelope"></i> {{entreprise.user.email}} <br>
+                    <i class="fa fa-phone"></i> {{entreprise.telephone}} <br>
+                    <i class="fa fa-map-marker"></i> {{entreprise.adresse}}
+                    {{entreprise.ville}} 
+            </span>
+        </div>
+        
+    </div>
+</a>    
+</div>
+{% endif %}
+
+{% endfor %}
+                
+</div>
+            
+{% endblock %}
+
+
+
+
+                
+
