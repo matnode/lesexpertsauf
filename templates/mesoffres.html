@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+ {% block css %}
+ {{ block.super }}
+ {% load staticfiles %} 
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+ {% endblock %}
+
+{% block body %}
+<div class="row  border-bottom white-bg dashboard-header">
+
+                    <div class="col-sm-6">
+                        <h3>Les informations sur votre Annonce
+                                  
+                        </h3>
+                        <small>{{message}}</small>
+                        
+                      
+                            <form method="POST" action="/mesoffres/">
+                               {% csrf_token %}
+                              
+                                <input type="text" name="reference" class="form-control" placeholder="Reférence de l'offre" required >
+                                <br>
+                                 <input type="text" name="intitule" class="form-control" placeholder="Intitule de l'offre" required >
+                                <br>
+                               type de contrat:  <input type="radio" name="typeoffre" value="CDI"> CDI <input type="radio" name="typeoffre" value="CDD"> CDD
+                                <br>
+                                  <input type="text" name="secteuractivite" class="form-control" placeholder="Le secteur d'activité" required> <br>
+                               <input type="text" name="datedebut" class="form-control dp1" placeholder="date de début de l'offre" required> 
+                                <input type="text" name="datefin" class="form-control dp1" placeholder="date de fin de l'offre" required> 
+                               <br>
+                                <input type="text" name="salairemin" class="form-control" placeholder="Salaire minimum" required>
+                                 <input type="text" name="salairemax" class="form-control" placeholder="Salaire maximum" required>
+                                <br>
+                                 <input type="text" name="region" class="form-control" placeholder="La région" required>
+                                 <input type="text" name="ville" class="form-control" placeholder="Lieu de prise de fonction" required> 
+                                 <br>
+                                <input type="email" name="contactoffre" class="form-control" placeholder="une adresse email" required> <br>
+                                
+                        <textarea class="form-control" placeholder="Pincipales responsabilités" name="mission" required ></textarea>   
+                                   <br>
+                                 <textarea class="form-control" placeholder="Compétences et qualification requises" name="description" required ></textarea>  
+                             
+                             
+                               <br>
+                                <button class="btn btn-primary" type="submit"> valider </button>
+                                <button class="btn btn-default" type="reset"> annuler </button>
+                            </form>
+                        
+                </div>
+                   
+                <div class="col-sm-6">
+                  <h3>  vos Annonces   
+                        <small class="label label-info">{{countoffre}}</small> 
+                  </h3>                               
+                   
+                   {% for offres in mesoffres %}             
+                      <div class="col-md-12 theoffre" style="margin-top:2%;">
+                      <span class="titre_offre"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
+                      
+                        <span class="pull-right competencetool"> 
+                                                 <a href="/misajouroffre/{{offres.id}}/" class="glyphicon glyphicon-edit" style="color:rgba(200, 200, 200, 1);" >
+                                                 </a> 
+                                                 <a class="glyphicon glyphicon-trash deleteoffre" offreid="{{offres.id}}" style="color:rgba(200, 200, 200, 1);">
+                                                 </a>                                                  
+                          </span>
+                                     
+                      <small class="date">localisation: {{offres.region}} {{offres.ville}} </small><br> 
+                      <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
+                     Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
+                             {{offres.region}}
+                     </div>    
+                                
+                       {% endfor %} 
+                      
+                
+                       <form action="/deloffres/" class="deloffre animated fadeInRight" method="POST" style="display:none;">
+                         {% csrf_token %}  
+                         <labe>Voulez-vous vraiment supprimer cette offre</label>
+                         <input type="hidden" name="idoffretodel"/><br> 
+                         <button class="btn btn-danger" type="submit"> Oui </button>   
+                         <button class="btn btn-default rollbackoffre" type="reset"> Non </button>
+                        </form>  
+                         <br>
+                         
+                       
+            
+</div>      
+            
+{% endblock %}
+
+ {% block js %}
+ {{block.super}}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script> 
+    <script src="{% static 'locales/bootstrap-datepicker.fr.min.js' %}"></script> 
+    <script src="{% static 'js/calendarform.js' %}"></script> 
+     <script src="{% static 'js/animateform.js' %}"></script> 
+      <script src="{% static 'js/offres.js' %}"></script>
+     <script>
+                 
+        $('.updatentactivite').on('click', function(){
+           
+            $('.textentactivite').hide();
+            $('.profilentactivite').show();
+
+        });        
+        
+        $('.updatentdescrip').on('click', function(){
+           
+            $('.textentdescrip').hide();
+            $('.profilentdescrip').show();
+
+        });
+     </script>
+ {% endblock %}
+

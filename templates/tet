@@ -1,0 +1,23 @@
+                                  <input type="text" name="reference" class="form-control" placeholder="Reférence de l'offre" required >
+                                <br>
+                                 <input type="text" name="intitule" class="form-control" placeholder="Intitule de l'offre" required >
+                                <br>
+                                type de contrat:  <input type="radio" name="typeoffre"> CDI <input type="radio" name="typeoffre"> CDD
+                                <br>
+                                <input type="text" name="datedeboffre" class="form-control dp1" placeholder="date de début de l'offre" required> 
+                                <input type="text" name="datefinoffere" class="form-control dp1" placeholder="date de fin de l'offre" required> 
+                                
+                                <br>
+                                <input type="text" name="salairemin" class="form-control" placeholder="Salaire minimum" required> 
+                                <input type="text" name="salairemax" class="form-control" placeholder="Salaire maximum" required> 
+                               
+                                <br>  
+                                 <input type="text" name="region" class="form-control" placeholder="Region de prise de fonction" required>                               
+                  
+                  
+                    <br>
+                                <input type="email" name="contactoffre" class="form-control" placeholder="une adresse email" required> 
+                                
+                        <textarea class="form-control" placeholder="Pincipales responsabilités" name="mission" required ></textarea>   
+                                   <br>
+                                 <textarea class="form-control" placeholder="Compétences et qualification requises" name="description" required ></textarea>  

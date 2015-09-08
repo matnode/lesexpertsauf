@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+         
+{% block body %}
+
+<div class="row">
+
+{% for offres in lesoffres %}
+
+{% if entreprise.ville != "" %}
+<div class="col-sm-4" style="padding:1%;">
+<a href="/detailoffre/{{offres.id}}/">
+    <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+        
+        <div class="col-sm-3" style="padding-left:0px;">
+            <img src="http://placehold.it/50x50"><br>
+        </div>
+
+        <div class="col-sm-9">
+            <span class="titre_offre"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
+                                              
+                      <small class="date">localisation: {{offres.region}} {{offres.ville}} </small><br> 
+                      <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
+                     Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
+                             {{offres.region}}
+        </div>
+        
+    </div>
+</a>    
+</div>
+{% endif %}
+
+{% endfor %}
+                
+</div>
+            
+{% endblock %}
+
+
+
+
+                
+

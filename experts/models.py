@@ -3,6 +3,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from json import JSONEncoder
 
 class Typecompte (models.Model):
        user =  models.OneToOneField(User)
@@ -143,14 +144,18 @@ class Offre(models.Model):
     entreprise = models.ForeignKey(Entreprise)
     reference = models.CharField(max_length=200)
     intitule = models.TextField()
-    ville = models.CharField(max_length=200)
+    typeoffre = models.CharField(max_length=200) 
+    datedebut = models.CharField(max_length=200)
+    datefin = models.CharField(max_length=200)
+    salairemin = models.CharField(max_length=200)
+    salairemax = models.CharField(max_length=200)
     region = models.CharField(max_length=200)
-    secteuractivite = models.TextField()
+    ville = models.CharField(max_length=200)
+    contactoffre = models.TextField()
+    description = models.TextField()
     mission = models.TextField()
-    typedecontra = models.CharField(max_length=200)
-    periodaffichage = models.CharField(max_length=255)
-    grillesalaire = models.TextField(max_length=255)
-    datelimite = models.CharField(max_length=255)
-    description= models.TextField()
-    dureecontrat = models.CharField(max_length=200)
-    dateprisefonction = models.CharField(max_length=200)
+    secteuractivite = models.TextField()
+    
+class MyEncoder(JSONEncoder):
+    def default(self, o):
+        return o.__dict__  

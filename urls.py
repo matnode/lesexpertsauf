@@ -11,6 +11,7 @@ urlpatterns = patterns('experts.views',
     (r'^inscription/$', 'inscription'),
     (r'^acceuil/$', 'acceuil'),
     (r'^routeur/$', 'routeur'),
+    #profil expert
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
     (r'^profilinfo/(?P<user_id>\d+)/$', 'profilinfo'),
     (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
@@ -32,9 +33,10 @@ urlpatterns = patterns('experts.views',
     (r'^reglages/$', 'reglages'),
     (r'^motdepasse/$', 'motdepasse'),
     #listing des experts 
-    (r'^listexperts/$','lesexperts'),
-    (r'^voirlesexperts/$','voirlesexperts'),
+    (r'^listexperts/$','lesexperts'),   
     (r'^detailexpert/(?P<user_id>\d+)/$','detailexpert'),
+    #recherche des donnees experts, entreprise ou offre
+    (r'^recherchedesdonnees/$','recherchedesdonnees'),
     #entreprise
     (r'^listentreprise/$', 'listentreprise'),
     (r'^detailentreprise/(?P<user_id>\d+)/$','detailentreprise'),
@@ -43,4 +45,10 @@ urlpatterns = patterns('experts.views',
     (r'^profilentreprisecoord/$', 'profilentreprisecoord'),
     (r'^profilentreprisedescription/$', 'profilentreprisedescription'),
     (r'^profilentrepriseactivite/$', 'profilentrepriseactivite'),
+    #offre
+    (r'^mesoffres/$', 'mesoffres'),
+    (r'^lesoffres/$', 'lesoffres'),
+    (r'^detailoffre/(?P<offre_id>\d+)/$', 'detailoffre'),
+    (r'^misajouroffre/(?P<offre_id>\d+)/$', 'misajouroffre'),
+    (r'^deloffres/$', 'deloffres'),
 )
