@@ -9,7 +9,7 @@ urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
     (r'^deconnexion/$', 'deconnexion'),
     (r'^inscription/$', 'inscription'),
-    (r'^acceuil/$', 'acceuil'),
+    (r'^$', 'acceuil'),
     (r'^routeur/$', 'routeur'),
     #profil expert
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),

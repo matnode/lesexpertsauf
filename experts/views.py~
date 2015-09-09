@@ -42,11 +42,8 @@ def routeur(request):
 	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
     currentuser = request
    
-    if currentuser.user.typecompte.typedecompte == "Expert":
-        return HttpResponseRedirect(reverse(acceuil))
-    else:
-	    return HttpResponseRedirect(reverse(profilentreprise))
-    return render_to_response("../templates/inscription.html", context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse(acceuil))
+   
 
 def inscription(request):	
 	#On demarre avec le traitement des informations concernants     l'enregistrement d'un user
@@ -101,7 +98,24 @@ def acceuil(request):
 	
 	currentuser =request
 	
-	return render_to_response("../templates/acceuil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
+	# on compte le nombre d'expert
+	experts= Typecompte.objects.filter(typedecompte="Expert")
+	countexpert= experts.count()
+	
+	# on compte le nombre d'entreprise
+	entreprises= Typecompte.objects.filter(typedecompte="Entreprise")
+	countentreprise= entreprises.count()
+	
+	#on compte le nombre d'opportunité 
+	offres = Offres.objects.all()
+	countoffre = offres.count()
+	
+	return render_to_response("../templates/acceuil.html",{
+	'currentuser':currentuser,
+	'countexpert':countexpert,
+	'countentreprise':countentreprise,
+	'countoffre':countoffre
+	}, context_instance=RequestContext(request))
 
 def profil(request,user_id):	
 	# on est sur la page de profil
@@ -452,9 +466,9 @@ def recherchedesdonnees(request):
 	if request.method== 'POST':
 	    typedecompte=request.POST['typedecompte']
 	    if request.POST['typedecompte'] == 'Offre':   
-	        lesoffres = Offre.objects.all()
-	   
-	        return render_to_response('../templates/listeoffre.html', {'currentuser':currentuser,'lesoffres': lesoffres})
+	        lesoffres = Offre.objects.filter(intitule=request.POST['donnee'])
+	         
+	        return render_to_response('../templates/listeoffre.html', {'currentuser':currentuser,'lesoffres': lesoffres},context_instance=RequestContext(request))
 	    else:	    
 	        cesexperts = User.objects.filter(username__contains=request.POST['donnee'])
 	

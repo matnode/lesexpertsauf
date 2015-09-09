@@ -9,7 +9,7 @@ urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
     (r'^deconnexion/$', 'deconnexion'),
     (r'^inscription/$', 'inscription'),
-    (r'^acceuil/$', 'acceuil'),
+    (r'^/$', 'acceuil'),
     (r'^routeur/$', 'routeur'),
     #profil expert
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
@@ -36,7 +36,7 @@ urlpatterns = patterns('experts.views',
     (r'^listexperts/$','lesexperts'),   
     (r'^detailexpert/(?P<user_id>\d+)/$','detailexpert'),
     #recherche des donnees experts, entreprise ou offre
-    (r'^recherchedesdonnees/$','recherchelesdonnees'),
+    (r'^recherchedesdonnees/$','recherchedesdonnees'),
     #entreprise
     (r'^listentreprise/$', 'listentreprise'),
     (r'^detailentreprise/(?P<user_id>\d+)/$','detailentreprise'),
