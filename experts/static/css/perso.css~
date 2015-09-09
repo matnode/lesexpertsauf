@@ -6731,6 +6731,7 @@ body.boxed-layout.skin-3 #wrapper {
 
 .card_default{
 text-align:center;
+margin-bottom:2%;
 }
 
 .card_panel{
@@ -6754,7 +6755,7 @@ background-color: #D54747;
 }
 
 .card_violet{
-background-color: #47A8D5;
+background-color: #9B47D5;
 }
 
 
