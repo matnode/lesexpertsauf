@@ -3,6 +3,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from json import JSONEncoder
 
 class Typecompte (models.Model):
        user =  models.OneToOneField(User)

@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf.urls.defaults import *
+from django.conf.urls.static import static
+from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -9,10 +11,11 @@ urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
     (r'^deconnexion/$', 'deconnexion'),
     (r'^inscription/$', 'inscription'),
-    (r'^/$', 'acceuil'),
+    (r'^$', 'acceuil'),
     (r'^routeur/$', 'routeur'),
     #profil expert
     (r'^profil/(?P<user_id>\d+)/$', 'profil'),
+    (r'^profil/(?P<human_id>\d+)/photo/$', 'photoprofil'),
     (r'^profilinfo/(?P<user_id>\d+)/$', 'profilinfo'),
     (r'^profilcords/(?P<user_id>\d+)/$', 'profilcords'),
     (r'^profilcompetence/(?P<user_id>\d+)/$', 'profilcompetence'),
@@ -41,6 +44,7 @@ urlpatterns = patterns('experts.views',
     (r'^listentreprise/$', 'listentreprise'),
     (r'^detailentreprise/(?P<user_id>\d+)/$','detailentreprise'),
     (r'^profilentreprise/$', 'profilentreprise'),
+    (r'^photoprofilentreprise/$', 'photoprofilentreprise'),
     (r'^profilentrepriseinfo/$', 'profilentrepriseinfo'),
     (r'^profilentreprisecoord/$', 'profilentreprisecoord'),
     (r'^profilentreprisedescription/$', 'profilentreprisedescription'),
@@ -51,4 +55,7 @@ urlpatterns = patterns('experts.views',
     (r'^detailoffre/(?P<offre_id>\d+)/$', 'detailoffre'),
     (r'^misajouroffre/(?P<offre_id>\d+)/$', 'misajouroffre'),
     (r'^deloffres/$', 'deloffres'),
+
 )
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

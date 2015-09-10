@@ -9,7 +9,23 @@
 {% block body %}
 <div class="row  border-bottom white-bg dashboard-header">
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2" style="overflow:auto;">
+                    
+                            {% if currentuser.user.entreprise.photo %}                               
+                              <img src="{{ currentuser.user.entreprise.photo.url }}" class="img-responsive" style="width:2OOpx;"/>    
+                            {% else %} 
+                              <img src="http://placehold.it/100x100" class="img-responsive"/> 
+                            {% endif %}
+                    
+                                    <form method="post" action="/photoprofilentreprise/" enctype="multipart/form-data">
+				                         {% csrf_token %}
+				                         <input type="file" name="photo" >
+				                        <input type="submit" class="btn btn-primary" value="Enregistrez">  
+			                        </form>
+                              
+                    </div>
+
+                    <div class="col-sm-5">
                         <h3>Les informations sur votre entreprise 
                                     <a href="#" style="font-size:10px;" class="update_whoiam"> 
                                      <i class="fa fa-pencil"> </i>mettre à jour 
@@ -57,7 +73,7 @@
                          {% endif %} 
                     </div>
                    
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                      
                         <h3>
                             Les coordonnées de votre entreprise

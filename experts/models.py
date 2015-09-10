@@ -139,6 +139,7 @@ class Entreprise(models.Model):
     telephone = models.CharField(max_length=255)
     adresse = models.CharField(max_length=255)
     activite = models.TextField()
+    photo = models.ImageField(upload_to="photosentreprises/")
 
 class Offre(models.Model):
     entreprise = models.ForeignKey(Entreprise)

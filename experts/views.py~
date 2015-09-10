@@ -107,7 +107,7 @@ def acceuil(request):
 	countentreprise= entreprises.count()
 	
 	#on compte le nombre d'opportunité 
-	offres = Offres.objects.all()
+	offres = Offre.objects.all()
 	countoffre = offres.count()
 	
 	return render_to_response("../templates/acceuil.html",{
@@ -723,4 +723,23 @@ def misajouroffre(request,offre_id):
 	    return HttpResponseRedirect(reverse('experts.views.mesoffres'))    
   
 	return render_to_response("../templates/moduneoffre.html",{'currentuser':currentuser,'offre':offre}, context_instance=RequestContext(request))
-    
+
+def photoprofil(request, human_id):
+	context_instance=RequestContext(request)
+	currentuser=request
+	human = Human.objects.get(pk=human_id)	
+	if request.method == 'POST':
+		human.photo=request.FILES['photo']
+		human.save()
+		return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+
+def photoprofilentreprise(request):
+	context_instance=RequestContext(request)
+	currentuser=request
+	entreprise = Entreprise.objects.get(pk=currentuser.user.entreprise)	
+	if request.method == 'POST':
+		entreprise.photo=request.FILES['photo']
+		entreprise.save()
+		return HttpResponseRedirect(reverse('experts.views.profilentreprise'))
+	return HttpResponseRedirect(reverse('experts.views.profilentreprise'))

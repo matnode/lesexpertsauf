@@ -21,10 +21,28 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="http://placehold.it/50x50">
-                           
-                             </span>
+                        <div class="dropdown profile-element">
+                         <span>
+                        
+                                 {% if currentuser.user.typecompte.typedecompte == "Entreprise" %}
+                                
+                                     {% if currentuser.user.entreprise.photo %}                               
+                                       <img src="{{ currentuser.user.entreprise.photo.url }}"  class="img-responsive" style="width:50px;;"/>    
+                                     {% else %} 
+                                       <img src="http://placehold.it/50x50" class="img-responsive"/> 
+                                     {% endif %}                                 
+                                     
+                                 {% elif currentuser.user.typecompte.typedecompte == "Expert" %}
+                                
+                                     {% if currentuser.user.human.photo %}                               
+                                           <img src="{{ currentuser.user.human.photo.url }}" class="img-responsive" style="width:5Opx;"/>    
+                                     {% else %} 
+                                          <img src="http://placehold.it/50x50" class="img-responsive"/> 
+                                     {% endif %}
+                                    
+                                 {% endif %}
+                            
+                         </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{currentuser.user.username}}</strong>
                              </span> <span class="text-muted text-xs block">{{currentuser.user.human.civilite}} {{currentuser.user.human.nom}} {{currentuser.user.human.prenom}} <b class="caret"></b></span> </span> </a>

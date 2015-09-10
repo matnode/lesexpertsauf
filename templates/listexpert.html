@@ -10,8 +10,12 @@
     <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
         
         <div class="col-sm-3" style="padding-left:0px;">
-            <img src="http://placehold.it/50x50"><br>
-
+             {% if expert.photo %}                               
+                  <img src="{{ expert.photo.url}}" class="img-responsive" style="width:5Opx;"/>    
+                {% else %} 
+                  <img src="http://placehold.it/50x50" class="img-responsive  "/> 
+                {% endif %} 
+                <br>
             <span>
                 {{expert.user.username}} 
             </span>

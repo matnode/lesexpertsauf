@@ -14,8 +14,13 @@
                 <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
                     
                     <div class="col-sm-3" style="padding-left:0px;">
-                        <img src="http://placehold.it/50x50"><br>
-
+                       
+                       {% if expert.human.photo %}                               
+                          <img src="{{ expert.human.photo.url}}" class="img-responsive" style="width:5Opx;"/>    
+                       {% else %} 
+                          <img src="http://placehold.it/50x50" class="img-responsive  "/> 
+                       {% endif %} 
+                       
                         <span>
                             {{expert.username}}  {{expert.typecompte.typedecompte}} 
                         </span>
@@ -49,8 +54,14 @@
                 <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
                     
                     <div class="col-sm-3" style="padding-left:0px;">
-                        <img src="http://placehold.it/50x50"><br>
-
+                    
+                            {% if currentuser.user.entreprise.photo %}                               
+                              <img src="{{ expert.entreprise.photo.url }}" class="img-responsive" style="width:5Opx;"/>    
+                            {% else %} 
+                              <img src="http://placehold.it/50x50" class="img-responsive"/> 
+                            {% endif %}
+                            
+                       <br>
                         <span>
                             {{expert.username}}  {{expert.typecompte.typedecompte}}
                         </span>
