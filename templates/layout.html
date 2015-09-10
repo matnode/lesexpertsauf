@@ -64,31 +64,30 @@
                         </div>
                     </li>
                    
-                           
+                    <li>
+                        <a href="/"><i class="fa fa-home"></i> <span class="nav-label">Acceuil</span></a>
+                    </li>
+                             
                     <li>                       
                          {% if currentuser.user.typecompte.typedecompte == "Expert" %}
-                          <a href="/profil/{{currentuser.user.id}}/"><i class="fa fa-user"></i> <span class="nav-label">mon profil</span></a>
+                          <a href="/profil/{{currentuser.user.id}}/"><i class="fa fa-user"></i> <span class="nav-label">Mon profil</span></a>
                          {% elif currentuser.user.typecompte.typedecompte == "Entreprise"%}
-                              <a href="/profilentreprise/"><i class="fa fa-user"></i> <span class="nav-label">mon profil</span></a>
+                              <a href="/profilentreprise/"><i class="fa fa-user"></i> <span class="nav-label">Mon profil</span></a>
                          {% endif %}
                     </li>
                     
                      {% if currentuser.user.typecompte.typedecompte == "Entreprise" %}                    
                         <li>
-                            <a href="/mesoffres/"><i class="fa fa-flask"></i> <span class="nav-label">mes offres</span></a>
+                            <a href="/mesoffres/"><i class="fa fa-flask"></i> <span class="nav-label">Mes offres</span></a>
                         </li>
                     {%endif%}
                   
                     <li>
                         <a href="/lesoffres/"><i class="fa fa-flask"></i> <span class="nav-label">Les opportunités</span></a>
                     </li>
-                                 
-                 
-                   
-                      
-                 
+                         
                     <li class="special_link">
-                        <a href="/listentreprise/"><i class="fa fa-database"></i> <span class="nav-label">les entreprises</span></a>
+                        <a href="/listentreprise/"><i class="fa fa-database"></i> <span class="nav-label">Les entreprises</span></a>
                     </li>                    
                             
                     <li class="special_link">
