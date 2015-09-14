@@ -693,6 +693,13 @@ def detailoffre(request, offre_id):
 	offre = Offre.objects.get(pk=offre_id)	
 	return render_to_response("../templates/detailoffre.html",{'currentuser':currentuser,'offre':offre}, context_instance=RequestContext(request))
 
+def detailmonoffre(request, offre_id):	
+	# on est sur la page de profil
+	# on recucupère les identifiants de l'utilisateurs courant
+	currentuser =request
+	offre = Offre.objects.get(pk=offre_id)	
+	return render_to_response("../templates/detailmonoffre.html",{'currentuser':currentuser,'offre':offre}, context_instance=RequestContext(request))
+
 def lesoffres(request):	
 	# on est sur la page de profil
 	# on recucupère les identifiants de l'utilisateurs courant

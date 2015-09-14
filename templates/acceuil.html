@@ -53,3 +53,24 @@
             
 {% endblock %}
 
+ {% block js %}
+ {{block.super}}
+  
+     <script>
+                 
+        $('.card_panel').on('mouseover', function(){
+           
+           $(this).addClass("animated pulse");
+
+        }); 
+        
+        $('.card_panel').on('mouseout', function(){
+           
+           $(this).removeClass("animated pulse");
+
+        });       
+        
+     </script>
+     
+ {% endblock %}
+

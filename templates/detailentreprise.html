@@ -70,7 +70,7 @@
                     Les secteurs d'activités de votre entreprise                  
                </h3>
                
-              <p class="textentactivite">  {{entreprise.activite}} </p>
+              <p class="textentactivite">  {{entreprise.activite|safe|escape}} </p>
                              
             </div>
             
@@ -84,7 +84,7 @@
                    
                </h3>
               
-                  <p class="textentdescrip">  {{entreprise.description}} </p>
+                  <p class="textentdescrip">  {{entreprise.description|safe|escape}} </p>
                   
             </div>
             

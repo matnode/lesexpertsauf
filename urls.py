@@ -53,6 +53,7 @@ urlpatterns = patterns('experts.views',
     (r'^mesoffres/$', 'mesoffres'),
     (r'^lesoffres/$', 'lesoffres'),
     (r'^detailoffre/(?P<offre_id>\d+)/$', 'detailoffre'),
+    (r'^detailmonoffre/(?P<offre_id>\d+)/$', 'detailmonoffre'),
     (r'^misajouroffre/(?P<offre_id>\d+)/$', 'misajouroffre'),
     (r'^deloffres/$', 'deloffres'),
 

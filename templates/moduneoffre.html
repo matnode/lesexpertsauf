@@ -4,6 +4,7 @@
  {{ block.super }}
  {% load staticfiles %} 
       <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+      <script src="{% static 'ckeditor/ckeditor.js' %}"> </script>   
  {% endblock %}
 
 {% block body %}
@@ -37,11 +38,18 @@
                                  <input type="text" name="ville" value={{offre.ville}} class="form-control" placeholder="Lieu de prise de fonction" required> 
                                  <br>
                                 <input type="email" name="contactoffre" value={{offre.contactoffre}} class="form-control" placeholder="une adresse email" required> <br>
-                                
-                        <textarea class="form-control" value={{offre.mission}} placeholder="Pincipales responsabilités" name="mission" required ></textarea>   
-                                   <br>
-                                 <textarea class="form-control" value={{offre.description}} placeholder="Compétences et qualification requises" name="description" required ></textarea>  
+                        
+                                <label for="mission"> Principales responsabilités </label>        
+                                <textarea class="form-control" value={{offre.mission}} id="mission" name="mission" required ></textarea>   
+                                <br>
+                                   
+                                <label for="description"> Compétences et qualification requises </label>      
+                                <textarea class="form-control" value={{offre.description}} id="description" name="description" required ></textarea>  
                              
+                                <script>               
+                                    CKEDITOR.replace( 'mission' );
+                                    CKEDITOR.replace( 'description' );
+                                </script>   
                              
                                <br>
                                 <button class="btn btn-primary" type="submit"> valider </button>

@@ -12,12 +12,9 @@
                 <div class="col-sm-1"></div>
                    
                 <div class="col-sm-10">
-                  <h3>  vos Annonces   
-                        <small class="label label-info">{{countoffre}}</small> 
-                  </h3>                               
-                               
-               
+                       
                 <legend> {{offre.intitule}} <small> {{offre.typeoffre}} </small> </legend>
+                
                 <div>
                     <span> {{offre.secteuractivite}} </span> <br>
                     
@@ -32,7 +29,7 @@
                     <h3> Principales responsabilités  </h3>
                     
                     <p>
-                        {{offre.mission}}
+                        {{offre.mission|safe|escape}}
                     </p>
                     
                 </div>
@@ -41,7 +38,8 @@
                     <h3> Compétences et qualifications requises  </h3>
                     
                     <p>
-                        {{offre.description}}
+                        {{offre.description|safe|escape}}
+                      
                     </p>
                     
                 </div>  

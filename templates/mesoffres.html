@@ -3,7 +3,8 @@
  {% block css %}
  {{ block.super }}
  {% load staticfiles %} 
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" /> 
+      <script src="{% static 'ckeditor/ckeditor.js' %}"> </script>  
  {% endblock %}
 
 {% block body %}
@@ -36,13 +37,20 @@
                                  <input type="text" name="ville" class="form-control" placeholder="Lieu de prise de fonction" required> 
                                  <br>
                                 <input type="email" name="contactoffre" class="form-control" placeholder="une adresse email" required> <br>
-                                
-                        <textarea class="form-control" placeholder="Pincipales responsabilités" name="mission" required ></textarea>   
-                                   <br>
-                                 <textarea class="form-control" placeholder="Compétences et qualification requises" name="description" required ></textarea>  
+                               
+                                <label for="mission">Pincipales responsabilités</label>
+                                <textarea class="form-control" id="mission" name="mission" required ></textarea>   
+                                <br>
+                                   
+                                <label for="description">Compétences et qualification requises</label>
+                                <textarea class="form-control" name="description" required ></textarea>  
                              
-                             
-                               <br>
+                                <script>               
+                                    CKEDITOR.replace( 'mission' );
+                                    CKEDITOR.replace( 'description' );
+                                </script>                             
+                                <br>
+                               
                                 <button class="btn btn-primary" type="submit"> valider </button>
                                 <button class="btn btn-default" type="reset"> annuler </button>
                             </form>
@@ -56,20 +64,23 @@
                    
                    {% for offres in mesoffres %}             
                       <div class="col-md-12 theoffre" style="margin-top:2%;">
-                      <span class="titre_offre"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
-                      
+                      <a href="/detailmonoffre/{{offres.id}}/">
+                        <span class="titre_offre"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
+                      </a> 
                         <span class="pull-right competencetool"> 
                                                  <a href="/misajouroffre/{{offres.id}}/" class="glyphicon glyphicon-edit" style="color:rgba(200, 200, 200, 1);" >
                                                  </a> 
                                                  <a class="glyphicon glyphicon-trash deleteoffre" offreid="{{offres.id}}" style="color:rgba(200, 200, 200, 1);">
                                                  </a>                                                  
                           </span>
-                                     
-                      <small class="date">localisation: {{offres.region}} {{offres.ville}} </small><br> 
-                      <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
-                     Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
-                             {{offres.region}}
-                     </div>    
+                     
+                     <a href="/detailmonoffre/{{offres.id}}/">                
+                          <small class="date">localisation: {{offres.region}} {{offres.ville}} </small><br> 
+                          <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
+                         Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
+                                 {{offres.region}}
+                         </div>    
+                     </a> 
                                 
                        {% endfor %} 
                       

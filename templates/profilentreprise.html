@@ -3,7 +3,8 @@
  {% block css %}
  {{ block.super }}
  {% load staticfiles %} 
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />  
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" />
+      <script src="{% static 'ckeditor/ckeditor.js' %}"> </script> 
  {% endblock %}
 
 {% block body %}
@@ -170,20 +171,30 @@
             {% if currentuser.user.entreprise.activite == "" %} 
               <form method="post" action="/profilentrepriseactivite/" >
               {% csrf_token %}
-              <textarea class="form-control" placeholder="maximum 400 mots" name="activite" required ></textarea>                   
+              <textarea class="form-control" placeholder="maximum 400 mots" id="activite" name="activite" required ></textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
+              
+            <script>               
+                CKEDITOR.replace( 'activite' );
+            </script>
+              
             {% else %}
               <p class="textentactivite">  {{currentuser.user.entreprise.activite}} </p>
                 <form method="post" action="/profilentrepriseactivite/" class="profilentactivite" style="display:none;">
               {% csrf_token %}
-              <textarea class="form-control" placeholder="maximum 400 mots" name="activite" required >{{currentuser.user.entreprise.activite}}</textarea>                   
+              <textarea class="form-control" placeholder="maximum 400 mots" id="modactivite" name="activite" required >{{currentuser.user.entreprise.activite}}</textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
+              
+              <script>               
+                CKEDITOR.replace( 'modactivite' );
+             </script>
+              
             {% endif %}                       
             </div>
             
@@ -204,20 +215,30 @@
               {% if currentuser.user.entreprise.description == "" %}            
               <form method="post" action="/profilentreprisedescription/">
               {% csrf_token %}
-              <textarea class="form-control" placeholder="maximum 400 mots" name="description" required ></textarea>                   
+              <textarea class="form-control" placeholder="maximum 400 mots" id="description" name="description" required ></textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
+              
+             <script>               
+                CKEDITOR.replace( 'description' );
+             </script>
+              
               {% else %}
                   <p class="textentdescrip">  {{currentuser.user.entreprise.description}} </p>
               <form method="post" action="/profilentreprisedescription/" class="profilentdescrip" style="display:none;" > 
               {% csrf_token %}
-              <textarea class="form-control" placeholder="maximum 400 mots" name="description" required >{{currentuser.user.entreprise.description}}</textarea>                   
+              <textarea class="form-control" placeholder="maximum 400 mots" id="modescription" name="description" required >{{currentuser.user.entreprise.description}}</textarea>                   
                             <br>
                             <button class="btn btn-primary"> valider </button>
                             <button class="btn btn-default" type="reset"> annuler </button>
               </form>
+              
+             <script>               
+                CKEDITOR.replace( 'modescription' );
+             </script>
+              
               {% endif %}         
             </div>
             
