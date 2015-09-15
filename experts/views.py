@@ -463,6 +463,8 @@ def recherchedesdonnees(request):
 	# on est sur la page de profil
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
+	typedecompte='';
+	cesexperts='';
 	if request.method== 'POST':
 	    typedecompte=request.POST['typedecompte']
 	    if request.POST['typedecompte'] == 'Offre':   

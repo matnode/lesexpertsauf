@@ -8,7 +8,7 @@
 
         {% for expert in cesexperts %}
            
-            {% if  expert.typecompte.typedecompte == 'Expert' %}
+            {% if  expert.typecompte.typedecompte == typedecompte %}
             <div class="col-sm-4" style="padding:1%;">
             <a href="/detailexpert/{{expert.id}}/"  class="panel_expert">
                 <div class="border-bottom white-bg dashboard-header" style="overflow:auto;height:190px; ">
@@ -48,10 +48,10 @@
        {% endfor %}
  
         {% for expert in cesexperts %}
-           {% if  expert.typecompte.typedecompte == 'Entreprise' %}
+           {% if  expert.typecompte.typedecompte == typedecompte %}
             <div class="col-sm-4" style="padding:1%;">
             <a href="/detailentreprise/{{expert.entreprise.id}}/"  class="panel_expert">
-                <div class="border-bottom white-bg dashboard-header" style="overflow:auto; font-size:150px;">
+                <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:190px; font-size:15px;">
                     
                     <div class="col-sm-3" style="padding-left:0px;">
                     
