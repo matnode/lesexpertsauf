@@ -465,6 +465,7 @@ def recherchedesdonnees(request):
 	currentuser =request
 	typedecompte='';
 	cesexperts='';
+	countdonnee='';
 	if request.method== 'POST':
 	    typedecompte=request.POST['typedecompte']
 	    if request.POST['typedecompte'] == 'Offre':   
@@ -473,8 +474,13 @@ def recherchedesdonnees(request):
 	        return render_to_response('../templates/listeoffre.html', {'currentuser':currentuser,'lesoffres': lesoffres},context_instance=RequestContext(request))
 	    else:	    
 	        cesexperts = User.objects.filter(username__contains=request.POST['donnee'])
+	        countdonnee=cesexperts.count()
 	
-	return render_to_response("../templates/searchexpert.html",{'currentuser':currentuser,'typedecompte':typedecompte,'cesexperts':cesexperts}, context_instance=RequestContext(request))
+	return render_to_response("../templates/searchexpert.html",{
+	                                                            'countdonnee':countdonnee,
+	                                                            'currentuser':currentuser,
+	                                                            'typedecompte':typedecompte,
+	                                                            'cesexperts':cesexperts}, context_instance=RequestContext(request))
 	
 
 
