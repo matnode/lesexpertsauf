@@ -6758,4 +6758,27 @@ background-color: #D54747;
 background-color: #9B47D5;
 }
 
+a.panel_expert{
+color:#333;
+}
 
+a.panel_expert>div:hover{
+background-color:#fafafa;
+}
+
+.panel_nameuser{
+font-weight:600;
+}
+
+.panel_full_name{
+color: #4675E6;
+font-weight: 600;
+}
+
+.panel_more_info>i{
+color:#50249B;
+}
+
+.panel_signature>span{
+font-style:italic;
+}

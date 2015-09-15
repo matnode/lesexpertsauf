@@ -8,8 +8,8 @@
 
 {% if entreprise.ville != "" %}
 <div class="col-sm-4" style="padding:1%;">
-<a href="/detailentreprise/{{entreprise.id}}/">
-    <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+<a href="/detailentreprise/{{entreprise.id}}/"  class="panel_expert">
+    <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:150px;">
         
         <div class="col-sm-3" style="padding-left:0px;">
             
@@ -20,14 +20,17 @@
              {% endif %}
              
             
-            {{entreprise.user.username}}
+            
+            <span class="panel_nameuser">
+                {{entreprise.user.username}}
+            </span>
             
         </div>
 
         <div class="col-sm-9">
-            <span> {{entreprise.nom}}</span> <br>
+            <span class="panel_full_name"> {{entreprise.nom}}</span> <br>
              
-            <span>  <i class="fa fa-envelope"></i> {{entreprise.user.email}} <br>
+            <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{entreprise.user.email}} <br>
                     <i class="fa fa-phone"></i> {{entreprise.telephone}} <br>
                     <i class="fa fa-map-marker"></i> {{entreprise.adresse}}
                     {{entreprise.ville}} 

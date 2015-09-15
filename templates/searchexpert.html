@@ -10,8 +10,8 @@
            
             {% if  expert.typecompte.typedecompte == 'Expert' %}
             <div class="col-sm-4" style="padding:1%;">
-            <a href="/detailexpert/{{expert.id}}/">
-                <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+            <a href="/detailexpert/{{expert.id}}/"  class="panel_expert">
+                <div class="border-bottom white-bg dashboard-header" style="overflow:auto;height:190px; ">
                     
                     <div class="col-sm-3" style="padding-left:0px;">
                        
@@ -21,15 +21,15 @@
                           <img src="http://placehold.it/50x50" class="img-responsive  "/> 
                        {% endif %} 
                        
-                        <span>
+                        <span class="panel_nameuser">
                             {{expert.username}}  {{expert.typecompte.typedecompte}} 
                         </span>
                     </div>
 
-                    <div class="col-sm-9">
-                        <span>{{expert.human.civilite}} {{expert.human.nom}} {{expert.human.prenom}}</span> <br>
+                    <div class="col-sm-9" style="padding-left:10%;">
+                        <span class="panel_full_name">{{expert.human.civilite}} {{expert.human.nom}} {{expert.human.prenom}}</span> <br>
                          <span>{{expert.human.niveauetude}}</span> <br>
-                        <span>  <i class="fa fa-envelope"></i> {{expert.email}} <br>
+                        <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{expert.email}} <br>
                                 <i class="fa fa-phone"></i> {{expert.human.telephone}} <br>
                                 <i class="fa fa-map-marker"></i> {{expert.human.adresse}}<br>
                                 {{expert.human.ville}} 
@@ -37,7 +37,7 @@
                     </div>
                     
                     <div class="col-sm-12">
-                     <small> {{expert.human.signature}} </small> 
+                     <span style="font-size:11px; "><em> {{expert.human.signature}} </em></span> 
                     </div>
                     
                 </div>
@@ -50,8 +50,8 @@
         {% for expert in cesexperts %}
            {% if  expert.typecompte.typedecompte == 'Entreprise' %}
             <div class="col-sm-4" style="padding:1%;">
-            <a href="/detailentreprise/{{expert.entreprise.id}}/">
-                <div class="border-bottom white-bg dashboard-header" style="overflow:auto;">
+            <a href="/detailentreprise/{{expert.entreprise.id}}/"  class="panel_expert">
+                <div class="border-bottom white-bg dashboard-header" style="overflow:auto; font-size:150px;">
                     
                     <div class="col-sm-3" style="padding-left:0px;">
                     
@@ -67,10 +67,10 @@
                         </span>
                     </div>
 
-                    <div class="col-sm-9">
-                        <span>{{expert.entreprise.nom}}</span> <br>
+                    <div class="col-sm-9" style="padding-left:10%;">
+                        <span class="panel_full_name">{{expert.entreprise.nom}}</span> <br>
                         
-                        <span>  <i class="fa fa-envelope"></i> {{expert.email}} <br>
+                        <span  class="panel_more_info">  <i class="fa fa-envelope"></i> {{expert.email}} <br>
                                 <i class="fa fa-phone"></i> {{expert.entreprise.telephone}} <br>
                                 <i class="fa fa-map-marker"></i> {{expert.entreprise.adresse}}<br>
                                 {{expert.entreprise.ville}} 
