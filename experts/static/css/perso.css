@@ -6768,6 +6768,12 @@ background-color:#fafafa;
 
 .panel_nameuser{
 font-weight:600;
+ font-size:12px;
+ width:100px;
+ overflow: hidden;
+ -o-text-overflow: ellipsis; /* pour Opera 9 */
+ text-overflow: ellipsis; 
+
 }
 
 .panel_full_name{
@@ -6782,3 +6788,8 @@ color:#50249B;
 .panel_signature>span{
 font-style:italic;
 }
+
+.namefield{
+    font-weight:600;
+}
+

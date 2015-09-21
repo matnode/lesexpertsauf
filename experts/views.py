@@ -165,7 +165,8 @@ def profilinfo(request,user_id):
                 human.datenaissance = request.POST['dateanniv']
                 human.signature = request.POST['signature']
         human.save()
-	
+        return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
+	   
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 	
 def profilcords(request,user_id):	
@@ -181,8 +182,10 @@ def profilcords(request,user_id):
                 human.adresse = request.POST['adresse']
                 human.codepostale = request.POST['bp']
                 human.ville = request.POST['ville']
+                human.pays = request.POST['pays']
                 
         human.save()
+        return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 
@@ -361,7 +364,7 @@ def profilangue(request,user_id):
             if request.POST['nom']:
              langue = Langue( 
                 human= human,           
-                nom = request.POST['nom'],
+                nomlangue = request.POST['nom'],
                 niveau = request.POST['niveau']
             )
                                
@@ -379,7 +382,7 @@ def modprofilangue(request,user_id):
         if request.method== 'POST':
             langue = Langue.objects.get(pk=request.POST['idthislangue'])              
             if request.POST['nom']:       
-                langue.nom = request.POST['nom'],
+                langue.nomlangue = request.POST['nom'],
                 langue.niveau = request.POST['niveau']
                                            
             langue.save()

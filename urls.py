@@ -4,8 +4,8 @@ from django.conf.urls.defaults import *
 from django.conf.urls.static import static
 from django.conf import settings
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('experts.views',
     (r'^login/$', 'index'),
@@ -56,7 +56,11 @@ urlpatterns = patterns('experts.views',
     (r'^detailmonoffre/(?P<offre_id>\d+)/$', 'detailmonoffre'),
     (r'^misajouroffre/(?P<offre_id>\d+)/$', 'misajouroffre'),
     (r'^deloffres/$', 'deloffres'),
-
-)
+    #admin
+ )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += patterns('',
+    (r'^admin/', include(admin.site.urls)),
+)

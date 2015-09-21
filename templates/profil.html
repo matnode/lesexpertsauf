@@ -22,13 +22,13 @@
                   <img src="http://placehold.it/100x100" class="img-responsive"/> 
                 {% endif %}                           
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" style="overflow:auto;">
                                   <form method="post" action="/profil/{{currentuser.user.human.id}}/photo/" enctype="multipart/form-data">
 				                         {% csrf_token %}
-				                         <input type="file" name="photo" >
-				                        <input type="submit" class="btn btn-primary" value="Enregistrez">  
-			                        </form>
-                               <button class="btn btn-primary full-width"> changer de photo </button>
+				                         <input type="file" name="photo" required>
+				                     <button class="btn btn-primary full-width" type="submit"> changer de photo </button>  
+			                      </form>
+                              
                             </li>                                                       
                         </ul>
                         
@@ -67,7 +67,7 @@
                                           <br>
                                           <input type="text" placeholder="prenom" class="form-control" name="prenom">
                                           <br>
-                                          <input type="text" placeholder="date d'anniversaire" required class="form-control dateanniv" name="dateanniv">
+                                          <input type="text" placeholder="date d'anniversaire"  class="form-control dateanniv" name="dateanniv">
                                           <br>
                                           
                                           <label for="signature">Votre signature</label>
@@ -92,11 +92,14 @@
                                                <option> Mme.</option>
                                           </select>
                                           <br>
+                                          <labe class="namefield">nom </label>
                                           <input type="text" placeholder="nom" class="form-control" name="nom" value="{{currentuser.user.human.nom}}" required>
                                           <br>
+                                          <labe class="namefield">prenom</label>
                                           <input type="text" placeholder="prenom" class="form-control" name="prenom" value="{{currentuser.user.human.prenom}}">
                                           <br>
-                                          <input type="text" placeholder="date d'anniversaire" required class="form-control dateanniv" name="dateanniv" value="{{currentuser.user.human.datenaissance}}">
+                                          <labe class="namefield">date d'anniversaire </label>
+                                          <input type="text" placeholder="date d'anniversaire"  class="form-control dateanniv" name="dateanniv" value="{{currentuser.user.human.datenaissance}}">
                                           <br>
                                           
                                           <label for="signature">Votre signature</label>
@@ -147,7 +150,9 @@
                                           <br>
                                            <input type="text" placeholder="ville" class="form-control" name="ville" required>
                                           <br>
-                                          <button class="btn btn-primary"> enregistrer </button> <button class="btn btn-primary" type="reset"> Annuler </button>
+                                           <input type="text" placeholder="pays" class="form-control" name="pays" required>
+                                          <br>
+                                          <button class="btn btn-primary"> enregistrer </button> <button class="btn btn-default" type="reset"> Annuler </button>
                                     </form>
                                  {% else %}
                                    <div style="text-align:left;" class="update_mycords">
@@ -155,7 +160,7 @@
                                          <span>                                           
                                             <i class="fa fa-globe" style="color:#1AB394;"> </i>
                                             <span style="padding:1%; font-weight: 600;">Site web:</span> 
-                                            <a href="{{currentuser.user.human.siteweb}}" target="_blank">
+                                            <a href="http://{{currentuser.user.human.siteweb}}" target="_blank">
                                                 {{currentuser.user.human.siteweb}}
                                             </a>
                                           </span> <br>
@@ -168,8 +173,9 @@
                                           
                                           <span>
                                              <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
-                                             <span style="padding:1%; font-weight: 600;"> Mon adresse:</span> 
-                                              {{currentuser.user.human.adresse}}/ {{currentuser.user.human.ville}}
+                                             <span style="padding:1%; font-weight: 600;"> Pays et ville actuel:</span> 
+                                              {{currentuser.user.human.pays}}/ {{currentuser.user.human.ville}}<br>
+                                              <span style="padding:1%; font-weight: 600;"> Mon adresse:</span>   {{currentuser.user.human.adresse}}
                                           </span> <br>
                                           
                                           <span> 
@@ -182,18 +188,27 @@
                                    
                                          <form method="post" class="modmycord animated fadeInRight" style="display:none;" action="/profilcords/{{currentuser.user.id}}/"> 
                                            {% csrf_token %}
+                                           <labe class="namefield">site web </label>
                                           <input type="text" placeholder="site web (ex: ifgu.auf.org)" class="form-control" name="siteweb" value="{{currentuser.user.human.siteweb}}">
                                           <br>
+                                           <labe class="namefield">téléphone </label>
                                           <input type="text" placeholder="numero de telephone" class="form-control" name="telephone" value="{{currentuser.user.human.telephone}}" required>
                                           <br>
+                                           <labe class="namefield"> adresse</label>
                                           <input type="text" placeholder="votre adresse" class="form-control" name="adresse" value="{{currentuser.user.human.adresse}}">
                                           <br>
+                                           <labe class="namefield">boîte postale </label>
                                           <input type="text" placeholder="boite postale" class="form-control" name="bp" value="{{currentuser.user.human.codepostale}}">
+                                           <br>
+                                            <labe class="namefield">pays </label>
+                                           <input type="text" placeholder="pays" class="form-control" name="pays" required value="{{currentuser.user.human.pays}}">
                                           <br>
+                                           <labe class="namefield">ville </label>
                                            <input type="text" placeholder="ville" class="form-control" name="ville" required value="{{currentuser.user.human.ville}}">
+                                           
                                           <br>
                                           <button class="btn btn-primary"> enregistrer </button>
-                                         
+                                          <button class="btn btn-default" type="reset"> annuler </button>
                                     </form>
                                                                        
                                  {% endif %}
@@ -326,19 +341,19 @@
                                        {% if countmission == 0 %}
                                         <form action="/profilmission/{{currentuser.user.id}}/" method="POST">
                                         {% csrf_token %}
-                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" required>
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" >
                                               <br>
-                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" required>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" >
                                               <br>
                                               <input type="text" placeholder="titre de la mission" class="form-control" name="titre" required>                                            
                                               <br>
                                               <input type="text" placeholder="poste occupé" class="form-control" name="fonction" required>
                                               <br>
-                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" required>
+                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" >
                                               <br>
                                               <textarea placeholder="description de la mission" class="form-control" name="description"></textarea>
                                               <br>
-                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" required></textarea>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" ></textarea>
                                               <br>
                                               <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                               <button class="btn btn-default" type="reset"> Annuler </button>
@@ -346,19 +361,19 @@
                                        {% elif countmission != 0%}                                        
                                            <form action="/profilmission/{{currentuser.user.id}}/" class="newmission" style="display:none;" method="POST">
                                         {% csrf_token %}
-                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" required>
+                                              <input type="text" placeholder="date de début" class="form-control dp1" name="datedebut" >
                                               <br>
-                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" required>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1" name="datefin" >
                                               <br>
                                               <input type="text" placeholder="titre de la mission" class="form-control" name="titre" required>                                            
                                               <br>
                                               <input type="text" placeholder="poste occupé" class="form-control" name="fonction" required>
                                               <br>
-                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" required>
+                                              <input type="text" placeholder="entreprise" class="form-control" name="entreprise" >
                                               <br>
                                               <textarea placeholder="description de la mission" class="form-control" name="description"></textarea>
                                               <br>
-                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" required></textarea>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control" name="competence" ></textarea>
                                               <br>
                                               <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                               <button class="btn btn-default rollbackmission" type="reset"> Annuler </button>
@@ -405,9 +420,9 @@
                                         
                                           <form action="/modprofilmission/{{currentuser.user.id}}/" method="POST" class="modmission animated fadeInRight" method="POST" style="display:none;" >
                                         {% csrf_token %}
-                                          <input type="text" placeholder="date de début" class="form-control dp1 moddatedebut" name="datedebut" required>
+                                          <input type="text" placeholder="date de début" class="form-control dp1 moddatedebut" name="datedebut" >
                                               <br>
-                                              <input type="text" placeholder="date de fin" class="form-control dp1 moddatefin" name="datefin" required>
+                                              <input type="text" placeholder="date de fin" class="form-control dp1 moddatefin" name="datefin" >
                                               <br>
                                               <input type="text" placeholder="titre de la mission" class="form-control modtitre" name="titre" required>                                            
                                               <br>
@@ -418,7 +433,7 @@
                                               <br>
                                               <textarea placeholder="description de la mission" class="form-control moddescription" name="description"></textarea>
                                               <br>
-                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control modcompetence" name="competence" required></textarea>
+                                               <textarea placeholder="compétences utilisées pour cette mission" class="form-control modcompetence" name="competence" ></textarea>
                                               <br>
                                               <button class="btn btn-primary" type="submit"> Enregistrer </button>
                                               <button class="btn btn-default rollbackmission" type="reset"> Annuler </button>
@@ -465,15 +480,15 @@
                                      {% if countformation == 0 %}
                                       <form action="/profilformation/{{currentuser.user.id}}/" method="POST">
                                        {% csrf_token %} 
-                                          <input type="text" placeholder="date de début" class="form-control dp1 mod" name="datefin" required>
+                                          <input type="text" placeholder="date de début" class="form-control dp1 mod" name="datefin" >
                                           <br>
-                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" required>
+                                          <input type="text" placeholder="date de fin" class="form-control dp1" name="datedebut" >
                                           <br>
                                           <input type="text" placeholder="libellé de la formation" class="form-control" name="titre" required>
                                            <br>
                                              <input type="text" placeholder="le diplome obtenu" class="form-control" name="diplome" required>
                                             <br>
-                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="ecole" required>
+                                            <input type="text" placeholder="dans quelle école?" class="form-control" name="ecole" >
                                             <br>
                                             <input type="text" placeholder="le lieu de la formation" class="form-control" name="lieu" required>
                                             <br>
@@ -635,8 +650,8 @@
                                                  <a class="glyphicon glyphicon-trash deletelangue" langueid="{{langue.id}}" style="color:rgba(200, 200, 200, 1);">
                                                  </a>                                                  
                                             </span>
-                                            <span class="nomlangue{{langue.id}}">{{langue.nom}}</span> -
-                                            </span class="niveaulangue{{langue.id}}">{{langue.niveau}}</span>
+                                            <span class="nomlangue{{langue.id}}">{{langue.nomlangue}}</span> -
+                                            </span class="niveaulangue{{langue.id}}">{{langue.niveau}}</span> <br>
                                           {% empty %}
                                            <small>Aucune langue renseigné jusqu'ici</small>
                                           {% endfor %}

@@ -1,6 +1,6 @@
-@import url("http://fonts.googleapis.com/css?family=Lato+Sans:300,400,600,700&lang=en");
+
 /*
- *
+ *@import url("http://fonts.googleapis.com/css?family=Lato+Sans:300,400,600,700&lang=en");
  *   INSPINIA - Responsive Admin Theme
  *   version 2.2
  *
@@ -6768,6 +6768,12 @@ background-color:#fafafa;
 
 .panel_nameuser{
 font-weight:600;
+ font-size:12px;
+ width:100px;
+ overflow: hidden;
+ -o-text-overflow: ellipsis; /* pour Opera 9 */
+ text-overflow: ellipsis; 
+
 }
 
 .panel_full_name{
@@ -6779,6 +6785,11 @@ font-weight: 600;
 color:#50249B;
 }
 
-.panel_signature>small{
+.panel_signature>span{
 font-style:italic;
 }
+
+.namefield{
+    font-weight:600;
+}
+

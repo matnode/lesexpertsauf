@@ -19,12 +19,13 @@ class Human(models.Model):
     civilite = models.CharField(max_length=200) 
     online = models.IntegerField()	
     codepostale = models.TextField()
-    telephone = models.IntegerField() 
+    telephone = models.CharField(max_length=255) 
     siteweb = models.TextField() 
     adresse = models.TextField() 
     photo = models.ImageField(upload_to="photos/")
     niveauetude = models.CharField(max_length=200)
-    signature= models.TextField() 
+    signature= models.TextField()
+    pays = models.CharField(max_length=255) 
     ville = models.CharField(max_length=255)
     datenaissance= models.TextField()
     datecreation= models.DateTimeField()
@@ -51,7 +52,8 @@ class Human(models.Model):
           return self.signature
     def __unicode__(self):
           return self.ville
-
+    def __unicode__(self):
+          return self.pays
 
 class Competence(models.Model):
     human = models.ForeignKey(Human)
@@ -119,11 +121,11 @@ class Loisir(models.Model):
 
 class Langue(models.Model):
     human = models.ForeignKey(Human)
-    nom = models.CharField(max_length=255)
+    nomlangue = models.CharField(max_length=255)
     niveau = models.CharField(max_length=255)
     
     def __unicode__(self):
-          return self.nom
+          return self.nomlangue
     def __unicode__(self):
           return self.niveau
 

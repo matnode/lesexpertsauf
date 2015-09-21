@@ -81,7 +81,8 @@
                                           <span>
                                              <i class="fa fa-map-marker" style="color:#1AB394;"> </i>
                                              <span style="padding:1%; font-weight: 600;"> Mon adresse:</span> 
-                                              {{cetexpert.human.adresse}}/ {{cetexpert.human.ville}}
+                                              {{cetexpert.human.pays}}/ {{cetexpert.human.ville}} <br>
+                                              {{cetexpert.human.adresse}}
                                           </span> <br>
                                           
                                           <span> 
@@ -158,8 +159,7 @@
                                                                                                                      
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                        
+                                        </a>                                        
                                         
                                     </div>
                                 </div>
@@ -265,8 +265,7 @@
                                        
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                       
+                                        </a>                                       
                                        
                                     </div>
                                 </div>
@@ -275,7 +274,7 @@
                                          <div class="thelangue">
                                          {% for langue in langueuser%}
                                          
-                                            <span class="nomlangue{{langue.id}}">{{langue.nom}}</span> -
+                                            <span class="nomlangue{{langue.id}}">{{langue.nomlangue}}</span> -
                                             </span class="niveaulangue{{langue.id}}">{{langue.niveau}}</span>
                                           {% empty %}
                                            <small>Aucune langue renseigné jusqu'ici</small>
