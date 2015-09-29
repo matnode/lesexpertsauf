@@ -4,41 +4,49 @@
 
 <div class="row">
 
-{% for expert in human %}
-<div class="col-sm-4" style="padding:1%;">
-<a href="/detailexpert/{{expert.user.id}}/" class="panel_expert">
-    <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:190px;">
-        
-        <div class="col-sm-3" style="padding-left:0px;">
-             {% if expert.photo %}                               
-                  <img src="{{ expert.photo.url}}" class="img-responsive" style="width:5Opx;"/>    
-                {% else %} 
-                  <img src="http://placehold.it/50x50" class="img-responsive  "/> 
-                {% endif %} 
-                <br>
-            <p class="panel_nameuser">
-                {{expert.user.username}} 
-            </p>
-        </div>
+{% if counthuman != 0  %}
 
-        <div class="col-sm-9" style="padding-left:10%;">
-            <span class="panel_full_name">{{expert.civilite}} {{expert.nom}} {{expert.prenom}}</span> <br>
-             <span>{{expert.niveauetude}}</span> <br>
-            <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{expert.user.email}} <br>
-                    <i class="fa fa-phone"></i> <b> {{expert.telephone}}</b> <br>
-                    <i class="fa fa-map-marker"></i> {{expert.pays}} / {{expert.ville}}<br>
-                    {{expert.adresse}} 
-            </span>
+    {% for expert in human %}
+    <div class="col-sm-4" style="padding:1%;">
+    <a href="/detailexpert/{{expert.user.id}}/" class="panel_expert">
+        <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:190px;">
+            
+            <div class="col-sm-3" style="padding-left:0px;">
+                 {% if expert.photo %}                               
+                      <img src="{{ expert.photo.url}}" class="img-responsive" style="width:5Opx;"/>    
+                    {% else %} 
+                      <img src="http://placehold.it/50x50" class="img-responsive  "/> 
+                    {% endif %} 
+                    <br>
+                <p class="panel_nameuser">
+                    {{expert.user.username}} 
+                </p>
+            </div>
+
+            <div class="col-sm-9" style="padding-left:10%;">
+                <span class="panel_full_name">{{expert.civilite}} {{expert.nom}} {{expert.prenom}}</span> <br>
+                 <span>{{expert.niveauetude}}</span> <br>
+                <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{expert.user.email}} <br>
+                        <i class="fa fa-phone"></i> <b> {{expert.telephone}}</b> <br>
+                        <i class="fa fa-map-marker"></i> {{expert.pays}} / {{expert.ville}}<br>
+                        {{expert.adresse}} 
+                </span>
+            </div>
+            
+            <div class="col-sm-12">
+             <span style="font-size:11px; "><em> {{expert.signature}}</em> </span> 
+            </div>
+            
         </div>
-        
-        <div class="col-sm-12">
-         <span style="font-size:11px; "><em> {{expert.signature}}</em> </span> 
-        </div>
-        
+    </a>    
     </div>
-</a>    
-</div>
-{% endfor %}
+    {% endfor %}
+                
+   {% else %}
+   
+         <div class="alert alert-success"> Aucun expert enregistré pour l'instant </div>
+   
+   {% endif %}
                 
 </div>
             

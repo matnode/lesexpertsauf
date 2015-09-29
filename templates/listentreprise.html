@@ -3,47 +3,54 @@
 {% block body %}
 
 <div class="row">
+    
+{% if countentreprises != 0 %}
 
-{% for entreprise in lesentreprises %}
+        {% for entreprise in lesentreprises %}
 
-{% if entreprise.ville != "" %}
-<div class="col-sm-4" style="padding:1%;">
-<a href="/detailentreprise/{{entreprise.id}}/"  class="panel_expert">
-    <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:150px;">
-        
-        <div class="col-sm-3" style="padding-left:0px;">
-            
-             {% if entreprise.photo %}                               
-                   <img src="{{ entreprise.photo.url }}" class="img-responsive" style="width:2OOpx;"/>    
-             {% else %} 
-                  <img src="http://placehold.it/100x100" class="img-responsive"/> 
-             {% endif %}
-             
-            
-            
-            <p class="panel_nameuser">
-                {{entreprise.user.username}}
-            </p>
-            
-        </div>
-
-        <div class="col-sm-9">
-            <span class="panel_full_name"> {{entreprise.nom}}</span> <br>
-             
-            <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{entreprise.user.email}} <br>
-                    <i class="fa fa-phone"></i> {{entreprise.telephone}} <br>
-                    <i class="fa fa-map-marker"></i> {{entreprise.adresse}}
-                    {{entreprise.ville}} 
-            </span>
-        </div>
-        
-    </div>
-</a>    
-</div>
-{% endif %}
-
-{% endfor %}
+        {% if entreprise.ville != "" %}
+        <div class="col-sm-4" style="padding:1%;">
+        <a href="/detailentreprise/{{entreprise.id}}/"  class="panel_expert">
+            <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:150px;">
                 
+                <div class="col-sm-3" style="padding-left:0px;">
+                    
+                     {% if entreprise.photo %}                               
+                           <img src="{{ entreprise.photo.url }}" class="img-responsive" style="width:2OOpx;"/>    
+                     {% else %} 
+                          <img src="http://placehold.it/100x100" class="img-responsive"/> 
+                     {% endif %}
+                     
+                    
+                    
+                    <p class="panel_nameuser">
+                        {{entreprise.user.username}}
+                    </p>
+                    
+                </div>
+
+                <div class="col-sm-9">
+                    <span class="panel_full_name"> {{entreprise.nom}}</span> <br>
+                     
+                    <span class="panel_more_info">  <i class="fa fa-envelope"></i> {{entreprise.user.email}} <br>
+                            <i class="fa fa-phone"></i> {{entreprise.telephone}} <br>
+                            <i class="fa fa-map-marker"></i> {{entreprise.adresse}}
+                            {{entreprise.ville}} 
+                    </span>
+                </div>
+                
+            </div>
+        </a>    
+        </div>
+        {% endif %}
+
+        {% endfor %}
+
+{% else %}
+
+       <div class="alert alert-success"> Aucune entreprise enregistré pour l'instant </div>
+
+{% endif %}    
 </div>
             
 {% endblock %}

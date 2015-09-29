@@ -3,33 +3,47 @@
 {% block body %}
 
 <div class="row">
+    
+{% if countoffres != 0 %}
 
-{% for offres in lesoffres %}
 
-{% if entreprise.ville != "" %}
-<div class="col-sm-4" style="padding:1%;">
-<a href="/detailoffre/{{offres.id}}/" class="panel_expert">
-    <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:150px;">
-        
-        <div class="col-sm-3" style="padding-left:0px;">
-            <img src="http://placehold.it/50x50"><br>
-        </div>
+    {% for offres in lesoffres %}
 
-        <div class="col-sm-9">
-            <span class="titre_offre panel_full_name"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
-                                              
-                      <small class="date"><b>localisation</b>: {{offres.region}} {{offres.ville}} </small><br> 
-                      <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
-                     Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
-                             {{offres.region}}
-        </div>
-        
-    </div>
-</a>    
-</div>
-{% endif %}
 
-{% endfor %}
+    {% if entreprise.ville != "" %}
+              
+           
+            <div class="col-sm-4" style="padding:1%;">
+            <a href="/detailoffre/{{offres.id}}/" class="panel_expert">
+                <div class="border-bottom white-bg dashboard-header" style="overflow:auto; height:150px;">
+                    
+                    <div class="col-sm-3" style="padding-left:0px;">
+                        <img src="http://placehold.it/50x50"><br>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <span class="titre_offre panel_full_name"> {{offres.intitule}}  {{offres.typeoffre}}</span>  <br>  
+                                                          
+                                  <small class="date"><b>localisation</b>: {{offres.region}} {{offres.ville}} </small><br> 
+                                  <small class="date">disponible du {{offres.datedebut}} au  {{offres.datefin}} </small><br>             
+                                 Secteur d'activité: <span class="label label-primary"> {{offres.secteuractivite}} </span> <br>
+                                         {{offres.region}}
+                    </div>
+                    
+                </div>
+            </a>    
+            </div>
+
+            
+    {% endif %}
+
+    {% endfor %}
+
+{% else %}
+     
+        <div class="alert alert-success"> Aucune offre publié pour l'instant </div>
+    
+ {% endif %}
                 
 </div>
             

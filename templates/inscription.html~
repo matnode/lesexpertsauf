@@ -16,7 +16,7 @@
 
 	<div class="row animated fadeInDown">
 		
-		<div class="col-md-12 headerconnection" style="text-align:center; margin-top:2%;">
+		<div class="col-md-12 headerconnection" style="text-align:center; margin-top:1%;">
 
 			<h1 class="logo-name"> 
 			    IFGU <br>
@@ -40,12 +40,7 @@
 				<input  id="email" class="form-control" type="text" name="email" required>	
 			<label for="password" > Mot de passe </label>
 			<input id="password" class="form-control" type="password" name="password" required> <br>
-		    
-		    <label for="profil" > Votre profil </label>
-			<select id="profil" class="form-control" name="profil" required>
-			<option>Expert</option>
-			<option>Entreprise</option>
-			</select>
+		 
 				    
 			<button type="submit" class="btn full-width btn-primary">
 				<span class="glyphicon glyphicon-ok"  style="color:#FFF;"></span> 
