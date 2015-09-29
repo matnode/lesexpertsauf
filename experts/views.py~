@@ -30,7 +30,7 @@ def index(request):
             else:
                   message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> Votre comte a été desactivé </div>'
         else:
-             message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> email ou mot de passe incorrecte </div>'
+             message ='<div class="alert alert-danger" > <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button> nom d\'utilisateur ou mot de passe incorrecte </div>'
 	
     return render_to_response("../templates/connexion.html",{'message':message}, context_instance=RequestContext(request))
 
@@ -369,7 +369,7 @@ def profilangue(request,user_id):
             )
                                
              langue.save()
-             return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id)))
+             return HttpResponseRedirect(reverse('experts.views.profil', args=(currentuser.user.id,)))
 	
 	return render_to_response("../templates/profil.html",{'currentuser':currentuser}, context_instance=RequestContext(request))
 
@@ -458,9 +458,11 @@ def lesexperts(request):
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
 	human = Human.objects.all()
+	counthuman = counthuman.count()
+	#ceci c'est quand l'on fait une recherche
 	if request.method== 'POST':
 	    human = User.objects.filter(username__contains=request.POST['username'])
-	return render_to_response("../templates/listexpert.html",{'currentuser':currentuser,'human': human}, context_instance=RequestContext(request))
+	return render_to_response("../templates/listexpert.html",{'currentuser':currentuser,'counthuman':human,'human': human}, context_instance=RequestContext(request))
 	
 def recherchedesdonnees(request):	
 	# on est sur la page de profil
@@ -650,8 +652,10 @@ def listentreprise(request):
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
 	lesentreprises = Entreprise.objects.all()
-	
-	return render_to_response("../templates/listentreprise.html",{'currentuser':currentuser,'lesentreprises': lesentreprises}, context_instance=RequestContext(request))
+	countentreprises = lesentreprises.count()
+	return render_to_response("../templates/listentreprise.html",{'currentuser':currentuser,
+	'countentreprises':countentreprises,
+	'lesentreprises': lesentreprises}, context_instance=RequestContext(request))
 	
 def detailentreprise(request,user_id):	
 	# on est sur la page de profil
@@ -715,8 +719,10 @@ def lesoffres(request):
 	# on est sur la page de profil
 	# on recucupère les identifiants de l'utilisateurs courant
 	currentuser =request
+	countoffres=0
 	lesoffres = Offre.objects.all()
-	return render_to_response("../templates/listeoffre.html",{'currentuser':currentuser, 'lesoffres':lesoffres}, context_instance=RequestContext(request))
+	countoffres= lesoffres.count()
+	return render_to_response("../templates/listeoffre.html",{'currentuser':currentuser, 'countoffres':countoffres,'lesoffres':lesoffres}, context_instance=RequestContext(request))
 
 def misajouroffre(request,offre_id):	
 	# on est sur la page de profil
